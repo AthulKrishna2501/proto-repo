@@ -28,7 +28,8 @@ jobs:
       - name: Generate gRPC stubs
         run: |
           mkdir -p generated
-          protoc --go_out=generated --go-grpc_out=generated proto/**/*.proto
+          protoc --proto_path=proto --go_out=generated --go-grpc_out=generated $(find proto -name "*.proto")
+
 
       - name: Commit and Push Generated Files
         run: |
