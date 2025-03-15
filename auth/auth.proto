@@ -13,6 +13,7 @@ service AuthService{
    rpc SendOTP (OTPRequest)  returns (OTPResponse) {}
    rpc Verify (VerifyOTPRequest) returns (VerifyOTPResponse) {}
    rpc Logout (LogoutRequest) returns (LogoutResponse) {}
+   rpc ResendOTP (ResendOTPRequest) returns (ResendOTPResponse) {}
 }
 
 message RegisterRequest {

@@ -19,12 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Register_FullMethodName = "/auth.AuthService/Register"
-	AuthService_Login_FullMethodName    = "/auth.AuthService/Login"
-	AuthService_Validate_FullMethodName = "/auth.AuthService/Validate"
-	AuthService_SendOTP_FullMethodName  = "/auth.AuthService/SendOTP"
-	AuthService_Verify_FullMethodName   = "/auth.AuthService/Verify"
-	AuthService_Logout_FullMethodName   = "/auth.AuthService/Logout"
+	AuthService_Register_FullMethodName  = "/auth.AuthService/Register"
+	AuthService_Login_FullMethodName     = "/auth.AuthService/Login"
+	AuthService_Validate_FullMethodName  = "/auth.AuthService/Validate"
+	AuthService_SendOTP_FullMethodName   = "/auth.AuthService/SendOTP"
+	AuthService_Verify_FullMethodName    = "/auth.AuthService/Verify"
+	AuthService_Logout_FullMethodName    = "/auth.AuthService/Logout"
+	AuthService_ResendOTP_FullMethodName = "/auth.AuthService/ResendOTP"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -37,6 +38,7 @@ type AuthServiceClient interface {
 	SendOTP(ctx context.Context, in *OTPRequest, opts ...grpc.CallOption) (*OTPResponse, error)
 	Verify(ctx context.Context, in *VerifyOTPRequest, opts ...grpc.CallOption) (*VerifyOTPResponse, error)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
+	ResendOTP(ctx context.Context, in *ResendOTPRequest, opts ...grpc.CallOption) (*ResendOTPResponse, error)
 }
 
 type authServiceClient struct {
@@ -107,6 +109,16 @@ func (c *authServiceClient) Logout(ctx context.Context, in *LogoutRequest, opts 
 	return out, nil
 }
 
+func (c *authServiceClient) ResendOTP(ctx context.Context, in *ResendOTPRequest, opts ...grpc.CallOption) (*ResendOTPResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResendOTPResponse)
+	err := c.cc.Invoke(ctx, AuthService_ResendOTP_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -117,6 +129,7 @@ type AuthServiceServer interface {
 	SendOTP(context.Context, *OTPRequest) (*OTPResponse, error)
 	Verify(context.Context, *VerifyOTPRequest) (*VerifyOTPResponse, error)
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
+	ResendOTP(context.Context, *ResendOTPRequest) (*ResendOTPResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -144,6 +157,9 @@ func (UnimplementedAuthServiceServer) Verify(context.Context, *VerifyOTPRequest)
 }
 func (UnimplementedAuthServiceServer) Logout(context.Context, *LogoutRequest) (*LogoutResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
+}
+func (UnimplementedAuthServiceServer) ResendOTP(context.Context, *ResendOTPRequest) (*ResendOTPResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResendOTP not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -274,6 +290,24 @@ func _AuthService_Logout_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_ResendOTP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResendOTPRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).ResendOTP(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_ResendOTP_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).ResendOTP(ctx, req.(*ResendOTPRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +338,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Logout",
 			Handler:    _AuthService_Logout_Handler,
+		},
+		{
+			MethodName: "ResendOTP",
+			Handler:    _AuthService_ResendOTP_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
