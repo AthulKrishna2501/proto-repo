@@ -12,6 +12,7 @@ service AuthService{
    rpc Validate (ValidateRequest) returns (ValidateResponse) {}
    rpc SendOTP (OTPRequest)  returns (OTPResponse) {}
    rpc Verify (VerifyOTPRequest) returns (VerifyOTPResponse) {}
+   rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse){}
    rpc Logout (LogoutRequest) returns (LogoutResponse) {}
    rpc ResendOTP (ResendOTPRequest) returns (ResendOTPResponse) {}
 }
@@ -81,6 +82,14 @@ message ResendOTPResponse {
    int64 status = 1;  
    string message = 2;
    int64 expires_in = 3;
+}
+
+message RefreshTokenRequest{
+   string refresh_token = 1;
+}
+
+message RefreshTokenResponse{
+   string access_token =1;
 }
 
 message LogoutRequest {}
