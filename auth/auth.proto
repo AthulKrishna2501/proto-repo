@@ -71,6 +71,17 @@ message VerifyOTPResponse {
    string message = 2;
 }
 
+message ResendOTPRequest {
+   string email = 1; 
+   string role = 2;
+}
+
+message ResendOTPResponse {
+   int64 status = 1;  
+   string message = 2;
+   int64 expires_in = 3;
+}
+
 message LogoutRequest {}
 
 message LogoutResponse {
