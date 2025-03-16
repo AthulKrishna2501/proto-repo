@@ -6,95 +6,97 @@ package auth;
 option go_package = "./auth/";
 
 
-service AuthService{
-   rpc Register (RegisterRequest) returns (RegisterResponse) {}
-   rpc Login (LoginRequest) returns (LoginResponse) {}
-   rpc Validate (ValidateRequest) returns (ValidateResponse) {}
-   rpc SendOTP (OTPRequest)  returns (OTPResponse) {}
-   rpc Verify (VerifyOTPRequest) returns (VerifyOTPResponse) {}
-   rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse){}
-   rpc Logout (LogoutRequest) returns (LogoutResponse) {}
-   rpc ResendOTP (ResendOTPRequest) returns (ResendOTPResponse) {}
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+  rpc SendOTP(OTPRequest) returns (OTPResponse) {}
+  rpc Verify(VerifyOTPRequest) returns (VerifyOTPResponse) {}
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {}
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+  rpc ResendOTP(ResendOTPRequest) returns (ResendOTPResponse) {}
 }
 
 message RegisterRequest {
-   string name = 1;
-   string email = 2;
-   string password = 3;
-   string role = 4;
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string role = 4;
 }
 
 message RegisterResponse {
-   int64 status = 1;
-   string message = 2;
+  int64 status = 1;
+  string message = 2;
 }
 
 message ValidateRequest {
-   string token = 1;
+  string token = 1;
 }
 
 message ValidateResponse {
-   int64 status = 1;
-   string error = 2;
-   int64 user_id = 3;
+  int64 status = 1;
+  string error = 2;
+  int64 user_id = 3;
 }
 
 message LoginRequest {
-   string email = 1;
-   string password = 2;
-   string role = 3;
+  string email = 1;
+  string password = 2;
+  string role = 3;
 }
 
 message LoginResponse {
-   int64 status = 1;
-   string message = 2;
-   string access_token = 3;
-   string refresh_token = 4;
+  int64 status = 1;
+  string message = 2;
+  string access_token = 3;
+  string refresh_token = 4;
 }
 
 message OTPRequest {
-   string email = 1;
-   string role = 2;
+  string email = 1;
+  string role = 2;
 }
 
 message OTPResponse {
-   int64 status = 1;
-   string message = 2;
-   int64 expires_in = 3;
+  int64 status = 1;
+  string message = 2;
+  int64 expires_in = 3;
 }
 
 message VerifyOTPRequest {
-   string email = 1;
-   string otp = 2;
+  string email = 1;
+  string otp = 2;
 }
 
 message VerifyOTPResponse {
-   int64 status = 1;
-   string message = 2;
+  int64 status = 1;
+  string message = 2;
 }
 
 message ResendOTPRequest {
-   string email = 1; 
-   string role = 2;
+  string email = 1;
+  string role = 2;
 }
 
 message ResendOTPResponse {
-   int64 status = 1;  
-   string message = 2;
-   int64 expires_in = 3;
+  int64 status = 1;
+  string message = 2;
+  int64 expires_in = 3;
 }
 
-message RefreshTokenRequest{
-   string refresh_token = 1;
+message RefreshTokenRequest {
+  string refresh_token = 1;
 }
 
-message RefreshTokenResponse{
-   string access_token =1;
+message RefreshTokenResponse {
+  string access_token = 1;
 }
 
-message LogoutRequest {}
+message LogoutRequest {
+  string access_token = 1;
+}
 
 message LogoutResponse {
-   int64 status = 1;
-   string message = 2;
+  int64 status = 1;
+  string message = 2;
 }
