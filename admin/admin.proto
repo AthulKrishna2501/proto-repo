@@ -9,8 +9,22 @@ service AdminService {
    rpc ApproveRejectCategory(ApproveRejectCategoryRequest) returns (ApproveRejectCategoryResponse);
    rpc BlockUser(BlockUnblockUserRequest) returns (BlockUnblockUserResponse);
    rpc UnblockUser(BlockUnblockUserRequest) returns (BlockUnblockUserResponse);
+   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
 }
 
+message User {
+    string user_id = 1;
+    string email = 2;
+    string role = 3;
+    bool is_blocked = 4;
+    bool is_email_verified = 5;
+}
+
+message ListUsersRequest {}
+
+message ListUsersResponse {
+    repeated User users = 1;
+}
 message ApproveRejectCategoryRequest {
     string vendor_id = 1;
     string category_id = 2;

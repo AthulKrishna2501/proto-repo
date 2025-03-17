@@ -22,6 +22,7 @@ const (
 	AdminService_ApproveRejectCategory_FullMethodName = "/admin.AdminService/ApproveRejectCategory"
 	AdminService_BlockUser_FullMethodName             = "/admin.AdminService/BlockUser"
 	AdminService_UnblockUser_FullMethodName           = "/admin.AdminService/UnblockUser"
+	AdminService_ListUsers_FullMethodName             = "/admin.AdminService/ListUsers"
 )
 
 // AdminServiceClient is the client API for AdminService service.
@@ -31,6 +32,7 @@ type AdminServiceClient interface {
 	ApproveRejectCategory(ctx context.Context, in *ApproveRejectCategoryRequest, opts ...grpc.CallOption) (*ApproveRejectCategoryResponse, error)
 	BlockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error)
 	UnblockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error)
+	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 }
 
 type adminServiceClient struct {
@@ -71,6 +73,16 @@ func (c *adminServiceClient) UnblockUser(ctx context.Context, in *BlockUnblockUs
 	return out, nil
 }
 
+func (c *adminServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListUsersResponse)
+	err := c.cc.Invoke(ctx, AdminService_ListUsers_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type AdminServiceServer interface {
 	ApproveRejectCategory(context.Context, *ApproveRejectCategoryRequest) (*ApproveRejectCategoryResponse, error)
 	BlockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error)
 	UnblockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error)
+	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedAdminServiceServer) BlockUser(context.Context, *BlockUnblockU
 }
 func (UnimplementedAdminServiceServer) UnblockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnblockUser not implemented")
+}
+func (UnimplementedAdminServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 func (UnimplementedAdminServiceServer) testEmbeddedByValue()                      {}
@@ -172,6 +188,24 @@ func _AdminService_UnblockUser_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListUsersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).ListUsers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_ListUsers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).ListUsers(ctx, req.(*ListUsersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminService_ServiceDesc is the grpc.ServiceDesc for AdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnblockUser",
 			Handler:    _AdminService_UnblockUser_Handler,
+		},
+		{
+			MethodName: "ListUsers",
+			Handler:    _AdminService_ListUsers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
