@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AdminService_ApproveRejectCategory_FullMethodName = "/admin.AdminService/ApproveRejectCategory"
+	AdminService_BlockUser_FullMethodName             = "/admin.AdminService/BlockUser"
+	AdminService_UnblockUser_FullMethodName           = "/admin.AdminService/UnblockUser"
 )
 
 // AdminServiceClient is the client API for AdminService service.
@@ -27,6 +29,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AdminServiceClient interface {
 	ApproveRejectCategory(ctx context.Context, in *ApproveRejectCategoryRequest, opts ...grpc.CallOption) (*ApproveRejectCategoryResponse, error)
+	BlockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error)
+	UnblockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error)
 }
 
 type adminServiceClient struct {
@@ -47,11 +51,33 @@ func (c *adminServiceClient) ApproveRejectCategory(ctx context.Context, in *Appr
 	return out, nil
 }
 
+func (c *adminServiceClient) BlockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BlockUnblockUserResponse)
+	err := c.cc.Invoke(ctx, AdminService_BlockUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminServiceClient) UnblockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BlockUnblockUserResponse)
+	err := c.cc.Invoke(ctx, AdminService_UnblockUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility.
 type AdminServiceServer interface {
 	ApproveRejectCategory(context.Context, *ApproveRejectCategoryRequest) (*ApproveRejectCategoryResponse, error)
+	BlockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error)
+	UnblockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -64,6 +90,12 @@ type UnimplementedAdminServiceServer struct{}
 
 func (UnimplementedAdminServiceServer) ApproveRejectCategory(context.Context, *ApproveRejectCategoryRequest) (*ApproveRejectCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApproveRejectCategory not implemented")
+}
+func (UnimplementedAdminServiceServer) BlockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BlockUser not implemented")
+}
+func (UnimplementedAdminServiceServer) UnblockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnblockUser not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 func (UnimplementedAdminServiceServer) testEmbeddedByValue()                      {}
@@ -104,6 +136,42 @@ func _AdminService_ApproveRejectCategory_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_BlockUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BlockUnblockUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).BlockUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_BlockUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).BlockUser(ctx, req.(*BlockUnblockUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminService_UnblockUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BlockUnblockUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).UnblockUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_UnblockUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).UnblockUser(ctx, req.(*BlockUnblockUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminService_ServiceDesc is the grpc.ServiceDesc for AdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +182,14 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApproveRejectCategory",
 			Handler:    _AdminService_ApproveRejectCategory_Handler,
+		},
+		{
+			MethodName: "BlockUser",
+			Handler:    _AdminService_BlockUser_Handler,
+		},
+		{
+			MethodName: "UnblockUser",
+			Handler:    _AdminService_UnblockUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
