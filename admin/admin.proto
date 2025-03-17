@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+
+package admin;
+
+option go_package = "./admin/";
+
+service AdminService {
+   rpc ApproveRejectCategory(ApproveRejectCategoryRequest) returns (ApproveRejectCategoryResponse);
+}
+
+message ApproveRejectCategoryRequest {
+    string vendor_id = 1;
+    string category_id = 2;
+    string status = 3;
+}
+
+message ApproveRejectCategoryResponse {
+    string message = 1;
+}
