@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	VendorSevice_RequestCategory_FullMethodName = "/vendor.VendorSevice/RequestCategory"
+	VendorSevice_ListCategory_FullMethodName    = "/vendor.VendorSevice/ListCategory"
 )
 
 // VendorSeviceClient is the client API for VendorSevice service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VendorSeviceClient interface {
 	RequestCategory(ctx context.Context, in *RequestCategoryRequest, opts ...grpc.CallOption) (*RequestCategoryResponse, error)
+	ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error)
 }
 
 type vendorSeviceClient struct {
@@ -47,11 +49,22 @@ func (c *vendorSeviceClient) RequestCategory(ctx context.Context, in *RequestCat
 	return out, nil
 }
 
+func (c *vendorSeviceClient) ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCategoryResponse)
+	err := c.cc.Invoke(ctx, VendorSevice_ListCategory_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorSeviceServer is the server API for VendorSevice service.
 // All implementations must embed UnimplementedVendorSeviceServer
 // for forward compatibility.
 type VendorSeviceServer interface {
 	RequestCategory(context.Context, *RequestCategoryRequest) (*RequestCategoryResponse, error)
+	ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error)
 	mustEmbedUnimplementedVendorSeviceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedVendorSeviceServer struct{}
 
 func (UnimplementedVendorSeviceServer) RequestCategory(context.Context, *RequestCategoryRequest) (*RequestCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RequestCategory not implemented")
+}
+func (UnimplementedVendorSeviceServer) ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCategory not implemented")
 }
 func (UnimplementedVendorSeviceServer) mustEmbedUnimplementedVendorSeviceServer() {}
 func (UnimplementedVendorSeviceServer) testEmbeddedByValue()                      {}
@@ -104,6 +120,24 @@ func _VendorSevice_RequestCategory_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorSevice_ListCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).ListCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorSevice_ListCategory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).ListCategory(ctx, req.(*ListCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorSevice_ServiceDesc is the grpc.ServiceDesc for VendorSevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var VendorSevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RequestCategory",
 			Handler:    _VendorSevice_RequestCategory_Handler,
+		},
+		{
+			MethodName: "ListCategory",
+			Handler:    _VendorSevice_ListCategory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

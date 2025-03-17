@@ -7,16 +7,24 @@ option go_package = "./vendor/";
 
 service VendorSevice {
    rpc RequestCategory (RequestCategoryRequest) returns (RequestCategoryResponse);
+   rpc ListCategory (ListCategoryRequest) returns (ListCategoryResponse);
 }
 
 message RequestCategoryRequest {
     string vendor_id = 1;
     int64 category_id = 2;
-    string category_name = 3;
 }
 
 
 message RequestCategoryResponse {
     int64 status = 1;
     string message = 2;
+}
+
+message ListCategoryRequest  {}
+
+message  ListCategoryResponse {
+    int64 status = 1;
+    int64 category_id = 2;
+    string category_name = 3;
 }
