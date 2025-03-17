@@ -8,6 +8,8 @@ option go_package = "./vendor/";
 service VendorSevice {
    rpc RequestCategory (RequestCategoryRequest) returns (RequestCategoryResponse);
    rpc ListCategory (ListCategoryRequest) returns (ListCategoryResponse);
+   rpc ApproveRejectCategory(ApproveRejectCategoryRequest) returns (ApproveRejectCategoryResponse);
+   
 }
 
 message RequestCategoryRequest {
@@ -32,4 +34,15 @@ message Category {
     string category_name = 2;
     string title = 3;
     string image = 4;
+}
+
+message ApproveRejectCategoryRequest {
+    string vendor_id = 1;
+    string category_id = 2;
+    string status = 3;
+}
+
+message ApproveRejectCategoryResponse {
+    int64 status =1 ;
+    string message = 2;
 }
