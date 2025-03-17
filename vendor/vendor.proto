@@ -11,8 +11,8 @@ service VendorSevice {
 }
 
 message RequestCategoryRequest {
-    int64 vendor_id = 1;
-    int64 category_id = 2;
+    string vendor_id = 1;
+    string category_id = 2;
 }
 
 
