@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package vendor;
+
+option go_package = "./vendor";
+
+service VendorSevice {
+   rpc RequestCategory (RequestCategoryRequest) returns (RequestCategoryResponse);
+}
+
+message RequestCategoryRequest {
+    string vendor_id = 1;
+    int64 category_id = 2;
+    string category_name = 3;
+}
+
+
+message RequestCategoryResponse {
+    int64 status = 1;
+    string message = 2;
+}
