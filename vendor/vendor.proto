@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package vendor;
 
+
 option go_package = "./vendor/";
 
 service VendorSevice {
