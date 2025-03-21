@@ -16,7 +16,7 @@ service AuthService {
   rpc Logout(LogoutRequest) returns (LogoutResponse) {}
   rpc ResendOTP(ResendOTPRequest) returns (ResendOTPResponse) {}
   rpc GoogleLogin(GoogleLoginRequest) returns (GoogleLoginResponse) {}
-
+  rpc HandleGoogleCallback(GoogleCallbackRequest) returns (GoogleCallbackResponse) {}
 }
 
 message RegisterRequest {
@@ -103,10 +103,17 @@ message LogoutResponse {
   string message = 2;
 }
 
-message GoogleLoginRequest{}
+message GoogleLoginRequest {}
 
 
-message GoogleLoginResponse{
+message GoogleLoginResponse {
   string access_token = 1;
   string refresh_token = 2;
+}
+
+message GoogleCallbackRequest {}
+
+message GoogleCallbackResponse {
+  int64 status = 1;
+  string error = 2;
 }
