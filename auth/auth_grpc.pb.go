@@ -19,15 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_Register_FullMethodName     = "/auth.AuthService/Register"
-	AuthService_Login_FullMethodName        = "/auth.AuthService/Login"
-	AuthService_Validate_FullMethodName     = "/auth.AuthService/Validate"
-	AuthService_SendOTP_FullMethodName      = "/auth.AuthService/SendOTP"
-	AuthService_Verify_FullMethodName       = "/auth.AuthService/Verify"
-	AuthService_RefreshToken_FullMethodName = "/auth.AuthService/RefreshToken"
-	AuthService_Logout_FullMethodName       = "/auth.AuthService/Logout"
-	AuthService_ResendOTP_FullMethodName    = "/auth.AuthService/ResendOTP"
-	AuthService_GoogleLogin_FullMethodName  = "/auth.AuthService/GoogleLogin"
+	AuthService_Register_FullMethodName             = "/auth.AuthService/Register"
+	AuthService_Login_FullMethodName                = "/auth.AuthService/Login"
+	AuthService_Validate_FullMethodName             = "/auth.AuthService/Validate"
+	AuthService_SendOTP_FullMethodName              = "/auth.AuthService/SendOTP"
+	AuthService_Verify_FullMethodName               = "/auth.AuthService/Verify"
+	AuthService_RefreshToken_FullMethodName         = "/auth.AuthService/RefreshToken"
+	AuthService_Logout_FullMethodName               = "/auth.AuthService/Logout"
+	AuthService_ResendOTP_FullMethodName            = "/auth.AuthService/ResendOTP"
+	AuthService_GoogleLogin_FullMethodName          = "/auth.AuthService/GoogleLogin"
+	AuthService_HandleGoogleCallback_FullMethodName = "/auth.AuthService/HandleGoogleCallback"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -43,6 +44,7 @@ type AuthServiceClient interface {
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
 	ResendOTP(ctx context.Context, in *ResendOTPRequest, opts ...grpc.CallOption) (*ResendOTPResponse, error)
 	GoogleLogin(ctx context.Context, in *GoogleLoginRequest, opts ...grpc.CallOption) (*GoogleLoginResponse, error)
+	HandleGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*GoogleCallbackResponse, error)
 }
 
 type authServiceClient struct {
@@ -143,6 +145,16 @@ func (c *authServiceClient) GoogleLogin(ctx context.Context, in *GoogleLoginRequ
 	return out, nil
 }
 
+func (c *authServiceClient) HandleGoogleCallback(ctx context.Context, in *GoogleCallbackRequest, opts ...grpc.CallOption) (*GoogleCallbackResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GoogleCallbackResponse)
+	err := c.cc.Invoke(ctx, AuthService_HandleGoogleCallback_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
@@ -156,6 +168,7 @@ type AuthServiceServer interface {
 	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
 	ResendOTP(context.Context, *ResendOTPRequest) (*ResendOTPResponse, error)
 	GoogleLogin(context.Context, *GoogleLoginRequest) (*GoogleLoginResponse, error)
+	HandleGoogleCallback(context.Context, *GoogleCallbackRequest) (*GoogleCallbackResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -192,6 +205,9 @@ func (UnimplementedAuthServiceServer) ResendOTP(context.Context, *ResendOTPReque
 }
 func (UnimplementedAuthServiceServer) GoogleLogin(context.Context, *GoogleLoginRequest) (*GoogleLoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GoogleLogin not implemented")
+}
+func (UnimplementedAuthServiceServer) HandleGoogleCallback(context.Context, *GoogleCallbackRequest) (*GoogleCallbackResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HandleGoogleCallback not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
@@ -376,6 +392,24 @@ func _AuthService_GoogleLogin_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_HandleGoogleCallback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GoogleCallbackRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).HandleGoogleCallback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_HandleGoogleCallback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).HandleGoogleCallback(ctx, req.(*GoogleCallbackRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -418,6 +452,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GoogleLogin",
 			Handler:    _AuthService_GoogleLogin_Handler,
+		},
+		{
+			MethodName: "HandleGoogleCallback",
+			Handler:    _AuthService_HandleGoogleCallback_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
