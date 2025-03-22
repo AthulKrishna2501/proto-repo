@@ -111,7 +111,9 @@ message GoogleLoginResponse {
   string url = 2;
 }
 
-message GoogleCallbackRequest {}
+message GoogleCallbackRequest {
+  string code = 1;
+}
 
 message GoogleCallbackResponse {
   int64 status = 1;
