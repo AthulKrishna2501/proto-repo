@@ -107,8 +107,8 @@ message GoogleLoginRequest {}
 
 
 message GoogleLoginResponse {
-  string access_token = 1;
-  string refresh_token = 2;
+  int64 status = 1;
+  string url = 2;
 }
 
 message GoogleCallbackRequest {}
