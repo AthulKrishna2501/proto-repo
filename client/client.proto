@@ -11,7 +11,8 @@ service ClientService {
 
 
 message MasterOfCeremonyRequest{
-   string method = 1;
+   string user_id =1;
+   string method = 2;
 }
 
 message MasterOfCeremonyResponse{
