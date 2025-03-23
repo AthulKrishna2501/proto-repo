@@ -5,4 +5,15 @@ package client;
 
 option go_package = "./client/";
 
-service ClientService {}
+service ClientService {
+  rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse) {}
+}
+
+
+message MasterOfCeremonyRequest{
+   string method = 1;
+}
+
+message MasterOfCeremonyResponse{
+   string url = 1;
+}
