@@ -6,43 +6,75 @@ package vendor;
 option go_package = "./vendor/";
 
 service VendorSevice {
-   rpc RequestCategory (RequestCategoryRequest) returns (RequestCategoryResponse);
-   rpc ListCategory (ListCategoryRequest) returns (ListCategoryResponse);
-   rpc ApproveRejectCategory(ApproveRejectCategoryRequest) returns (ApproveRejectCategoryResponse);
-   
+  rpc RequestCategory(RequestCategoryRequest) returns (RequestCategoryResponse);
+  rpc ListCategory(ListCategoryRequest) returns (ListCategoryResponse);
+  rpc ApproveRejectCategory(ApproveRejectCategoryRequest) returns (ApproveRejectCategoryResponse);
+  rpc VendorProfile(VendorProfileRequest) returns (VendorProfileResponse) {};
+  rpc UpdateProfile(UpdateVendorProfileRequest) returns (UpdateVendorProfileResponse) {};
+
 }
 
 message RequestCategoryRequest {
-    string vendor_id = 1;
-    string category_id = 2;
+  string vendor_id = 1;
+  string category_id = 2;
 }
 
 
 message RequestCategoryResponse {
-    int64 status = 1;
-    string message = 2;
+  int64 status = 1;
+  string message = 2;
 }
 
-message ListCategoryRequest  {}
+message ListCategoryRequest {}
 
 message ListCategoryResponse {
-    repeated Category categories = 1;
+  repeated Category categories = 1;
 }
 
 message Category {
-    string category_id = 1;
-    string category_name = 2;
-    string title = 3;
-    string image = 4;
+  string category_id = 1;
+  string category_name = 2;
+  string title = 3;
+  string image = 4;
 }
 
 message ApproveRejectCategoryRequest {
-    string vendor_id = 1;
-    string category_id = 2;
-    string status = 3;
+  string vendor_id = 1;
+  string category_id = 2;
+  string status = 3;
 }
 
 message ApproveRejectCategoryResponse {
-    int64 status =1 ;
+  int64 status = 1;
+  string message = 2;
+}
+
+message VendorProfileRequest {
+  string vendor_id = 1;
+}
+
+message VendorProfileResponse {
+  string vendor_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string place = 4;
+  string email = 5;
+  string profile_image = 6;
+  string phone_number = 7;
+  string categories = 8;
+  string bio = 9;
+}
+
+message UpdateVendorProfileRequest {
+  optional string first_name = 1;
+  optional string last_ame = 2;
+  optional string place = 3;
+  optional string profile_image = 4;
+  optional string phone_number = 5;
+  optional string bio = 6;
+}
+
+message UpdateVendorProfileResponse {
+    int64 status = 1;
     string message = 2;
 }

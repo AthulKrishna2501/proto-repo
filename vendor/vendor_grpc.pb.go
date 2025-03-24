@@ -22,6 +22,8 @@ const (
 	VendorSevice_RequestCategory_FullMethodName       = "/vendor.VendorSevice/RequestCategory"
 	VendorSevice_ListCategory_FullMethodName          = "/vendor.VendorSevice/ListCategory"
 	VendorSevice_ApproveRejectCategory_FullMethodName = "/vendor.VendorSevice/ApproveRejectCategory"
+	VendorSevice_VendorProfile_FullMethodName         = "/vendor.VendorSevice/VendorProfile"
+	VendorSevice_UpdateProfile_FullMethodName         = "/vendor.VendorSevice/UpdateProfile"
 )
 
 // VendorSeviceClient is the client API for VendorSevice service.
@@ -31,6 +33,8 @@ type VendorSeviceClient interface {
 	RequestCategory(ctx context.Context, in *RequestCategoryRequest, opts ...grpc.CallOption) (*RequestCategoryResponse, error)
 	ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryResponse, error)
 	ApproveRejectCategory(ctx context.Context, in *ApproveRejectCategoryRequest, opts ...grpc.CallOption) (*ApproveRejectCategoryResponse, error)
+	VendorProfile(ctx context.Context, in *VendorProfileRequest, opts ...grpc.CallOption) (*VendorProfileResponse, error)
+	UpdateProfile(ctx context.Context, in *UpdateVendorProfileRequest, opts ...grpc.CallOption) (*UpdateVendorProfileResponse, error)
 }
 
 type vendorSeviceClient struct {
@@ -71,6 +75,26 @@ func (c *vendorSeviceClient) ApproveRejectCategory(ctx context.Context, in *Appr
 	return out, nil
 }
 
+func (c *vendorSeviceClient) VendorProfile(ctx context.Context, in *VendorProfileRequest, opts ...grpc.CallOption) (*VendorProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VendorProfileResponse)
+	err := c.cc.Invoke(ctx, VendorSevice_VendorProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorSeviceClient) UpdateProfile(ctx context.Context, in *UpdateVendorProfileRequest, opts ...grpc.CallOption) (*UpdateVendorProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateVendorProfileResponse)
+	err := c.cc.Invoke(ctx, VendorSevice_UpdateProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorSeviceServer is the server API for VendorSevice service.
 // All implementations must embed UnimplementedVendorSeviceServer
 // for forward compatibility.
@@ -78,6 +102,8 @@ type VendorSeviceServer interface {
 	RequestCategory(context.Context, *RequestCategoryRequest) (*RequestCategoryResponse, error)
 	ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryResponse, error)
 	ApproveRejectCategory(context.Context, *ApproveRejectCategoryRequest) (*ApproveRejectCategoryResponse, error)
+	VendorProfile(context.Context, *VendorProfileRequest) (*VendorProfileResponse, error)
+	UpdateProfile(context.Context, *UpdateVendorProfileRequest) (*UpdateVendorProfileResponse, error)
 	mustEmbedUnimplementedVendorSeviceServer()
 }
 
@@ -96,6 +122,12 @@ func (UnimplementedVendorSeviceServer) ListCategory(context.Context, *ListCatego
 }
 func (UnimplementedVendorSeviceServer) ApproveRejectCategory(context.Context, *ApproveRejectCategoryRequest) (*ApproveRejectCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApproveRejectCategory not implemented")
+}
+func (UnimplementedVendorSeviceServer) VendorProfile(context.Context, *VendorProfileRequest) (*VendorProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VendorProfile not implemented")
+}
+func (UnimplementedVendorSeviceServer) UpdateProfile(context.Context, *UpdateVendorProfileRequest) (*UpdateVendorProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
 }
 func (UnimplementedVendorSeviceServer) mustEmbedUnimplementedVendorSeviceServer() {}
 func (UnimplementedVendorSeviceServer) testEmbeddedByValue()                      {}
@@ -172,6 +204,42 @@ func _VendorSevice_ApproveRejectCategory_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorSevice_VendorProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VendorProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).VendorProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorSevice_VendorProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).VendorProfile(ctx, req.(*VendorProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorSevice_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateVendorProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).UpdateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorSevice_UpdateProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).UpdateProfile(ctx, req.(*UpdateVendorProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorSevice_ServiceDesc is the grpc.ServiceDesc for VendorSevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +258,14 @@ var VendorSevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApproveRejectCategory",
 			Handler:    _VendorSevice_ApproveRejectCategory_Handler,
+		},
+		{
+			MethodName: "VendorProfile",
+			Handler:    _VendorSevice_VendorProfile_Handler,
+		},
+		{
+			MethodName: "UpdateProfile",
+			Handler:    _VendorSevice_UpdateProfile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
