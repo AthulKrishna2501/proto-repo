@@ -7,14 +7,26 @@ option go_package = "./client/";
 
 service ClientService {
   rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse) {}
+  rpc HandleStripeEvent(StripeWebhookRequest) returns (StripeWebhookResponse) {}
+
 }
 
 
-message MasterOfCeremonyRequest{
-   string user_id =1;
-   string method = 2;
+message MasterOfCeremonyRequest {
+  string user_id = 1;
+  string method = 2;
 }
 
-message MasterOfCeremonyResponse{
-   string url = 1;
+message MasterOfCeremonyResponse {
+  string url = 1;
+}
+
+
+message StripeWebhookRequest {
+  string event_type = 1;
+  string payload = 2;
+}
+
+message StripeWebhookResponse {
+  string status = 1;
 }
