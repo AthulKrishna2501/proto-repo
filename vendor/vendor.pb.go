@@ -851,17 +851,17 @@ func (x *CreateServiceResponse) GetMessage() string {
 }
 
 type UpdateServiceRequest struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	ServiceId           string                 `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
-	ServiceTitle        string                 `protobuf:"bytes,2,opt,name=service_title,json=serviceTitle,proto3" json:"service_title,omitempty"`
-	YearOfExperience    int32                  `protobuf:"varint,3,opt,name=year_of_experience,json=yearOfExperience,proto3" json:"year_of_experience,omitempty"`
-	ServiceDescription  string                 `protobuf:"bytes,4,opt,name=service_description,json=serviceDescription,proto3" json:"service_description,omitempty"`
-	CancellationPolicy  string                 `protobuf:"bytes,5,opt,name=cancellation_policy,json=cancellationPolicy,proto3" json:"cancellation_policy,omitempty"`
-	TermsAndConditions  string                 `protobuf:"bytes,6,opt,name=terms_and_conditions,json=termsAndConditions,proto3" json:"terms_and_conditions,omitempty"`
-	ServiceDuration     int32                  `protobuf:"varint,7,opt,name=service_duration,json=serviceDuration,proto3" json:"service_duration,omitempty"`
-	ServicePrice        int32                  `protobuf:"varint,8,opt,name=service_price,json=servicePrice,proto3" json:"service_price,omitempty"`
-	AdditionalHourPrice *int32                 `protobuf:"varint,9,opt,name=additional_hour_price,json=additionalHourPrice,proto3,oneof" json:"additional_hour_price,omitempty"`
-	AvailableDates      *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=available_dates,json=availableDates,proto3" json:"available_dates,omitempty"`
+	state               protoimpl.MessageState   `protogen:"open.v1"`
+	ServiceId           string                   `protobuf:"bytes,1,opt,name=service_id,json=serviceId,proto3" json:"service_id,omitempty"`
+	ServiceTitle        string                   `protobuf:"bytes,2,opt,name=service_title,json=serviceTitle,proto3" json:"service_title,omitempty"`
+	YearOfExperience    int32                    `protobuf:"varint,3,opt,name=year_of_experience,json=yearOfExperience,proto3" json:"year_of_experience,omitempty"`
+	ServiceDescription  string                   `protobuf:"bytes,4,opt,name=service_description,json=serviceDescription,proto3" json:"service_description,omitempty"`
+	CancellationPolicy  string                   `protobuf:"bytes,5,opt,name=cancellation_policy,json=cancellationPolicy,proto3" json:"cancellation_policy,omitempty"`
+	TermsAndConditions  string                   `protobuf:"bytes,6,opt,name=terms_and_conditions,json=termsAndConditions,proto3" json:"terms_and_conditions,omitempty"`
+	ServiceDuration     int32                    `protobuf:"varint,7,opt,name=service_duration,json=serviceDuration,proto3" json:"service_duration,omitempty"`
+	ServicePrice        int32                    `protobuf:"varint,8,opt,name=service_price,json=servicePrice,proto3" json:"service_price,omitempty"`
+	AdditionalHourPrice *int32                   `protobuf:"varint,9,opt,name=additional_hour_price,json=additionalHourPrice,proto3,oneof" json:"additional_hour_price,omitempty"`
+	AvailableDates      []*timestamppb.Timestamp `protobuf:"bytes,10,rep,name=available_dates,json=availableDates,proto3" json:"available_dates,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -959,7 +959,7 @@ func (x *UpdateServiceRequest) GetAdditionalHourPrice() int32 {
 	return 0
 }
 
-func (x *UpdateServiceRequest) GetAvailableDates() *timestamppb.Timestamp {
+func (x *UpdateServiceRequest) GetAvailableDates() []*timestamppb.Timestamp {
 	if x != nil {
 		return x.AvailableDates
 	}
@@ -1252,7 +1252,7 @@ var file_vendor_vendor_proto_rawDesc = string([]byte{
 	0x69, 0x63, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x05, 0x48, 0x00, 0x52, 0x13, 0x61, 0x64, 0x64,
 	0x69, 0x74, 0x69, 0x6f, 0x6e, 0x61, 0x6c, 0x48, 0x6f, 0x75, 0x72, 0x50, 0x72, 0x69, 0x63, 0x65,
 	0x88, 0x01, 0x01, 0x12, 0x43, 0x0a, 0x0f, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62, 0x6c, 0x65,
-	0x5f, 0x64, 0x61, 0x74, 0x65, 0x73, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67,
+	0x5f, 0x64, 0x61, 0x74, 0x65, 0x73, 0x18, 0x0a, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67,
 	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54,
 	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0e, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61,
 	0x62, 0x6c, 0x65, 0x44, 0x61, 0x74, 0x65, 0x73, 0x42, 0x18, 0x0a, 0x16, 0x5f, 0x61, 0x64, 0x64,
