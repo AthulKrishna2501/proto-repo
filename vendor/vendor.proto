@@ -2,6 +2,9 @@ syntax = "proto3";
 
 package vendor;
 
+import "google/protobuf/timestamp.proto";
+
+
 
 option go_package = "./vendor/";
 
@@ -91,13 +94,14 @@ message CreateServiceRequest {
     string vendor_id = 1;
     string service_title = 2;
     int32 year_of_experience = 3;
-    string type = 4;
-    string service_description = 5;
-    string cancellation_policy = 6;
-    string terms_and_conditions = 7;
-    int32 service_duration = 8;
-    int32 service_price = 9;
-    int32 additional_hour_price = 10;
+    string service_description = 4;
+    string cancellation_policy = 5;
+    string terms_and_conditions = 6;
+    int32 service_duration = 7;
+    int32 service_price = 8;
+    int32 additional_hour_price = 9;
+    repeated google.protobuf.Timestamp available_dates = 10;
+
 }
 
 message CreateServiceResponse {
@@ -108,13 +112,14 @@ message UpdateServiceRequest {
     string service_id = 1;
     string service_title = 2;
     int32 year_of_experience = 3;
-    string type = 4;
-    string service_description = 5;
-    string cancellation_policy = 6;
-    string terms_and_conditions = 7;
-    int32 service_duration = 8;
-    int32 service_price = 9;
-    int32 additional_hour_price = 10;
+    string service_description = 4;
+    string cancellation_policy = 5;
+    string terms_and_conditions = 6;
+    int32 service_duration = 7;
+    int32 service_price = 8;
+    int32 additional_hour_price = 9;
+    repeated google.protobuf.Timestamp available_dates = 10;
+
 }
 
 message UpdateServiceResponse {
