@@ -100,7 +100,7 @@ message CreateServiceRequest {
     int32 service_duration = 7;
     int32 service_price = 8;
     int32 additional_hour_price = 9;
-    repeated google.protobuf.Timestamp available_dates = 10;
+    google.protobuf.Timestamp available_dates = 10;
 
 }
 
@@ -118,7 +118,7 @@ message UpdateServiceRequest {
     int32 service_duration = 7;
     int32 service_price = 8;
     int32 additional_hour_price = 9;
-    repeated google.protobuf.Timestamp available_dates = 10;
+    google.protobuf.Timestamp available_dates = 10;
 
 }
 
