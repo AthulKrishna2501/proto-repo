@@ -99,8 +99,8 @@ message CreateServiceRequest {
   string terms_and_conditions = 6;
   int32 service_duration = 7;
   int32 service_price = 8;
- repeated int32 additional_hour_price = 9;
-  google.protobuf.Timestamp available_dates = 10;
+  int32 additional_hour_price = 9;
+  repeated google.protobuf.Timestamp available_dates = 10;
 
 }
 
