@@ -17,6 +17,8 @@ service VendorSevice {
   rpc CreateService(CreateServiceRequest) returns (CreateServiceResponse);
   rpc UpdateService(UpdateServiceRequest) returns (UpdateServiceResponse);
   rpc DeleteService(DeleteServiceRequest) returns (DeleteServiceResponse);
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+
 
 
 
@@ -132,4 +134,15 @@ message DeleteServiceRequest {
 
 message DeleteServiceResponse {
   string message = 1;
+}
+
+message ChangePasswordRequest {
+  string vendor_id = 1;        
+  string current_password = 2; 
+  string new_password = 3;   
+  string confirm_password = 4; 
+}
+
+message ChangePasswordResponse {
+  string message = 1; 
 }

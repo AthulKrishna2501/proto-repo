@@ -27,6 +27,7 @@ const (
 	VendorSevice_CreateService_FullMethodName         = "/vendor.VendorSevice/CreateService"
 	VendorSevice_UpdateService_FullMethodName         = "/vendor.VendorSevice/UpdateService"
 	VendorSevice_DeleteService_FullMethodName         = "/vendor.VendorSevice/DeleteService"
+	VendorSevice_ChangePassword_FullMethodName        = "/vendor.VendorSevice/ChangePassword"
 )
 
 // VendorSeviceClient is the client API for VendorSevice service.
@@ -41,6 +42,7 @@ type VendorSeviceClient interface {
 	CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*CreateServiceResponse, error)
 	UpdateService(ctx context.Context, in *UpdateServiceRequest, opts ...grpc.CallOption) (*UpdateServiceResponse, error)
 	DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*DeleteServiceResponse, error)
+	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error)
 }
 
 type vendorSeviceClient struct {
@@ -131,6 +133,16 @@ func (c *vendorSeviceClient) DeleteService(ctx context.Context, in *DeleteServic
 	return out, nil
 }
 
+func (c *vendorSeviceClient) ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ChangePasswordResponse)
+	err := c.cc.Invoke(ctx, VendorSevice_ChangePassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorSeviceServer is the server API for VendorSevice service.
 // All implementations must embed UnimplementedVendorSeviceServer
 // for forward compatibility.
@@ -143,6 +155,7 @@ type VendorSeviceServer interface {
 	CreateService(context.Context, *CreateServiceRequest) (*CreateServiceResponse, error)
 	UpdateService(context.Context, *UpdateServiceRequest) (*UpdateServiceResponse, error)
 	DeleteService(context.Context, *DeleteServiceRequest) (*DeleteServiceResponse, error)
+	ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error)
 	mustEmbedUnimplementedVendorSeviceServer()
 }
 
@@ -176,6 +189,9 @@ func (UnimplementedVendorSeviceServer) UpdateService(context.Context, *UpdateSer
 }
 func (UnimplementedVendorSeviceServer) DeleteService(context.Context, *DeleteServiceRequest) (*DeleteServiceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteService not implemented")
+}
+func (UnimplementedVendorSeviceServer) ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
 }
 func (UnimplementedVendorSeviceServer) mustEmbedUnimplementedVendorSeviceServer() {}
 func (UnimplementedVendorSeviceServer) testEmbeddedByValue()                      {}
@@ -342,6 +358,24 @@ func _VendorSevice_DeleteService_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorSevice_ChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).ChangePassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorSevice_ChangePassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).ChangePassword(ctx, req.(*ChangePasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorSevice_ServiceDesc is the grpc.ServiceDesc for VendorSevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -380,6 +414,10 @@ var VendorSevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteService",
 			Handler:    _VendorSevice_DeleteService_Handler,
+		},
+		{
+			MethodName: "ChangePassword",
+			Handler:    _VendorSevice_ChangePassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
