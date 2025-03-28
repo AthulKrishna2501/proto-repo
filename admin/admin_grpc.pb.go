@@ -23,6 +23,7 @@ const (
 	AdminService_BlockUser_FullMethodName             = "/admin.AdminService/BlockUser"
 	AdminService_UnblockUser_FullMethodName           = "/admin.AdminService/UnblockUser"
 	AdminService_ListUsers_FullMethodName             = "/admin.AdminService/ListUsers"
+	AdminService_ViewRequests_FullMethodName          = "/admin.AdminService/ViewRequests"
 )
 
 // AdminServiceClient is the client API for AdminService service.
@@ -33,6 +34,7 @@ type AdminServiceClient interface {
 	BlockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error)
 	UnblockUser(ctx context.Context, in *BlockUnblockUserRequest, opts ...grpc.CallOption) (*BlockUnblockUserResponse, error)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
+	ViewRequests(ctx context.Context, in *ViewRequestsReq, opts ...grpc.CallOption) (*ViewRequestsResponse, error)
 }
 
 type adminServiceClient struct {
@@ -83,6 +85,16 @@ func (c *adminServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest
 	return out, nil
 }
 
+func (c *adminServiceClient) ViewRequests(ctx context.Context, in *ViewRequestsReq, opts ...grpc.CallOption) (*ViewRequestsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ViewRequestsResponse)
+	err := c.cc.Invoke(ctx, AdminService_ViewRequests_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type AdminServiceServer interface {
 	BlockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error)
 	UnblockUser(context.Context, *BlockUnblockUserRequest) (*BlockUnblockUserResponse, error)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
+	ViewRequests(context.Context, *ViewRequestsReq) (*ViewRequestsResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedAdminServiceServer) UnblockUser(context.Context, *BlockUnbloc
 }
 func (UnimplementedAdminServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
+}
+func (UnimplementedAdminServiceServer) ViewRequests(context.Context, *ViewRequestsReq) (*ViewRequestsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewRequests not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 func (UnimplementedAdminServiceServer) testEmbeddedByValue()                      {}
@@ -206,6 +222,24 @@ func _AdminService_ListUsers_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_ViewRequests_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewRequestsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).ViewRequests(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_ViewRequests_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).ViewRequests(ctx, req.(*ViewRequestsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminService_ServiceDesc is the grpc.ServiceDesc for AdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListUsers",
 			Handler:    _AdminService_ListUsers_Handler,
+		},
+		{
+			MethodName: "ViewRequests",
+			Handler:    _AdminService_ViewRequests_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

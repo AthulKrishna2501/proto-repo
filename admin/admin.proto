@@ -10,6 +10,7 @@ service AdminService {
    rpc BlockUser(BlockUnblockUserRequest) returns (BlockUnblockUserResponse);
    rpc UnblockUser(BlockUnblockUserRequest) returns (BlockUnblockUserResponse);
    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+   rpc ViewRequests(ViewRequestsReq) returns (ViewRequestsResponse);
 }
 
 message User {
@@ -41,4 +42,11 @@ message BlockUnblockUserRequest {
 
 message BlockUnblockUserResponse {
     string message = 1;
+}
+
+message ViewRequestsReq {}
+
+message  ViewRequestsResponse{
+    string vendor_id = 1;
+    string category_id = 2;
 }
