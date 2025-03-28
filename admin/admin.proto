@@ -46,7 +46,11 @@ message BlockUnblockUserResponse {
 
 message ViewRequestsReq {}
 
-message  ViewRequestsResponse{
+message CategoryRequest {
     string vendor_id = 1;
     string category_id = 2;
+}
+
+message ViewRequestsResponse {
+    repeated CategoryRequest requests = 1;
 }
