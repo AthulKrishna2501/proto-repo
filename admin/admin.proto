@@ -11,6 +11,7 @@ service AdminService {
    rpc UnblockUser(BlockUnblockUserRequest) returns (BlockUnblockUserResponse);
    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
    rpc ViewRequests(ViewRequestsReq) returns (ViewRequestsResponse);
+   rpc AddCategory(AddCategoryRequest) returns (AddCategoryResponse);
 }
 
 message User {
@@ -53,4 +54,12 @@ message CategoryRequest {
 
 message ViewRequestsResponse {
     repeated CategoryRequest requests = 1;
+}
+
+message AddCategoryRequest{
+    string category_name =1;
+}
+
+message AddCategoryResponse{
+    string message = 1;
 }
