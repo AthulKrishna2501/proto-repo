@@ -38,5 +38,6 @@ message VerifyPaymentRequest {
 }
 
 message VerifyPaymentResponse {
-  string message = 1;
+  bool success = 1;
+  string message = 2;
 }
