@@ -8,6 +8,7 @@ option go_package = "./client/";
 service ClientService {
   rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse) {}
   rpc HandleStripeEvent(StripeWebhookRequest) returns (StripeWebhookResponse) {}
+  rpc VerifyPayment(VerifyPaymentRequest) returns (VerifyPaymentResponse) {}
 
 }
 
@@ -29,4 +30,13 @@ message StripeWebhookRequest {
 
 message StripeWebhookResponse {
   string status = 1;
+}
+
+message VerifyPaymentRequest {
+  string user_id = 1;
+  string session_id = 2;
+}
+
+message VerifyPaymentResponse {
+  string message = 1;
 }
