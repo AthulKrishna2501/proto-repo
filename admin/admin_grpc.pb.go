@@ -25,6 +25,8 @@ const (
 	AdminService_ListUsers_FullMethodName             = "/admin.AdminService/ListUsers"
 	AdminService_ViewRequests_FullMethodName          = "/admin.AdminService/ViewRequests"
 	AdminService_AddCategory_FullMethodName           = "/admin.AdminService/AddCategory"
+	AdminService_ViewAdminWallet_FullMethodName       = "/admin.AdminService/ViewAdminWallet"
+	AdminService_AdminDashBoard_FullMethodName        = "/admin.AdminService/AdminDashBoard"
 )
 
 // AdminServiceClient is the client API for AdminService service.
@@ -37,6 +39,8 @@ type AdminServiceClient interface {
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 	ViewRequests(ctx context.Context, in *ViewRequestsReq, opts ...grpc.CallOption) (*ViewRequestsResponse, error)
 	AddCategory(ctx context.Context, in *AddCategoryRequest, opts ...grpc.CallOption) (*AddCategoryResponse, error)
+	ViewAdminWallet(ctx context.Context, in *ViewAdminWalletRequest, opts ...grpc.CallOption) (*ViewAdminWalletResponse, error)
+	AdminDashBoard(ctx context.Context, in *AdminDashBoardRequest, opts ...grpc.CallOption) (*AdminDashBoardResponse, error)
 }
 
 type adminServiceClient struct {
@@ -107,6 +111,26 @@ func (c *adminServiceClient) AddCategory(ctx context.Context, in *AddCategoryReq
 	return out, nil
 }
 
+func (c *adminServiceClient) ViewAdminWallet(ctx context.Context, in *ViewAdminWalletRequest, opts ...grpc.CallOption) (*ViewAdminWalletResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ViewAdminWalletResponse)
+	err := c.cc.Invoke(ctx, AdminService_ViewAdminWallet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminServiceClient) AdminDashBoard(ctx context.Context, in *AdminDashBoardRequest, opts ...grpc.CallOption) (*AdminDashBoardResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AdminDashBoardResponse)
+	err := c.cc.Invoke(ctx, AdminService_AdminDashBoard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility.
@@ -117,6 +141,8 @@ type AdminServiceServer interface {
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	ViewRequests(context.Context, *ViewRequestsReq) (*ViewRequestsResponse, error)
 	AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error)
+	ViewAdminWallet(context.Context, *ViewAdminWalletRequest) (*ViewAdminWalletResponse, error)
+	AdminDashBoard(context.Context, *AdminDashBoardRequest) (*AdminDashBoardResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -144,6 +170,12 @@ func (UnimplementedAdminServiceServer) ViewRequests(context.Context, *ViewReques
 }
 func (UnimplementedAdminServiceServer) AddCategory(context.Context, *AddCategoryRequest) (*AddCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddCategory not implemented")
+}
+func (UnimplementedAdminServiceServer) ViewAdminWallet(context.Context, *ViewAdminWalletRequest) (*ViewAdminWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewAdminWallet not implemented")
+}
+func (UnimplementedAdminServiceServer) AdminDashBoard(context.Context, *AdminDashBoardRequest) (*AdminDashBoardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AdminDashBoard not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 func (UnimplementedAdminServiceServer) testEmbeddedByValue()                      {}
@@ -274,6 +306,42 @@ func _AdminService_AddCategory_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_ViewAdminWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewAdminWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).ViewAdminWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_ViewAdminWallet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).ViewAdminWallet(ctx, req.(*ViewAdminWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminService_AdminDashBoard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminDashBoardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).AdminDashBoard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_AdminDashBoard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).AdminDashBoard(ctx, req.(*AdminDashBoardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminService_ServiceDesc is the grpc.ServiceDesc for AdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -304,6 +372,14 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddCategory",
 			Handler:    _AdminService_AddCategory_Handler,
+		},
+		{
+			MethodName: "ViewAdminWallet",
+			Handler:    _AdminService_ViewAdminWallet_Handler,
+		},
+		{
+			MethodName: "AdminDashBoard",
+			Handler:    _AdminService_AdminDashBoard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

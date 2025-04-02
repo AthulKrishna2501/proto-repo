@@ -12,6 +12,8 @@ service AdminService {
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
   rpc ViewRequests(ViewRequestsReq) returns (ViewRequestsResponse);
   rpc AddCategory(AddCategoryRequest) returns (AddCategoryResponse);
+  rpc ViewAdminWallet(ViewAdminWalletRequest) returns (ViewAdminWalletResponse);
+  rpc AdminDashBoard(AdminDashBoardRequest) returns (AdminDashBoardResponse);
 
 }
 
@@ -63,4 +65,20 @@ message AddCategoryRequest {
 
 message AddCategoryResponse {
   string message = 1;
+}
+
+message ViewAdminWalletRequest {
+  string email = 1;
+}
+
+message ViewAdminWalletResponse {
+  float balance = 1;
+}
+message AdminDashBoardRequest {}
+
+message AdminDashBoardResponse {
+  int32 total_vendors = 1;
+  int32 total_clients = 2;
+  int32 total_bookings = 3;
+  int64 total_revenue = 4;
 }
