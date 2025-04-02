@@ -29,6 +29,7 @@ const (
 	VendorSevice_DeleteService_FullMethodName         = "/vendor.VendorSevice/DeleteService"
 	VendorSevice_ChangePassword_FullMethodName        = "/vendor.VendorSevice/ChangePassword"
 	VendorSevice_GetVendorDashboard_FullMethodName    = "/vendor.VendorSevice/GetVendorDashboard"
+	VendorSevice_GetVendorServices_FullMethodName     = "/vendor.VendorSevice/GetVendorServices"
 )
 
 // VendorSeviceClient is the client API for VendorSevice service.
@@ -45,6 +46,7 @@ type VendorSeviceClient interface {
 	DeleteService(ctx context.Context, in *DeleteServiceRequest, opts ...grpc.CallOption) (*DeleteServiceResponse, error)
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error)
 	GetVendorDashboard(ctx context.Context, in *GetVendorDashboardRequest, opts ...grpc.CallOption) (*GetVendorDashboardResponse, error)
+	GetVendorServices(ctx context.Context, in *GetVendorServicesRequest, opts ...grpc.CallOption) (*GetVendorServicesResponse, error)
 }
 
 type vendorSeviceClient struct {
@@ -155,6 +157,16 @@ func (c *vendorSeviceClient) GetVendorDashboard(ctx context.Context, in *GetVend
 	return out, nil
 }
 
+func (c *vendorSeviceClient) GetVendorServices(ctx context.Context, in *GetVendorServicesRequest, opts ...grpc.CallOption) (*GetVendorServicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetVendorServicesResponse)
+	err := c.cc.Invoke(ctx, VendorSevice_GetVendorServices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorSeviceServer is the server API for VendorSevice service.
 // All implementations must embed UnimplementedVendorSeviceServer
 // for forward compatibility.
@@ -169,6 +181,7 @@ type VendorSeviceServer interface {
 	DeleteService(context.Context, *DeleteServiceRequest) (*DeleteServiceResponse, error)
 	ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error)
 	GetVendorDashboard(context.Context, *GetVendorDashboardRequest) (*GetVendorDashboardResponse, error)
+	GetVendorServices(context.Context, *GetVendorServicesRequest) (*GetVendorServicesResponse, error)
 	mustEmbedUnimplementedVendorSeviceServer()
 }
 
@@ -208,6 +221,9 @@ func (UnimplementedVendorSeviceServer) ChangePassword(context.Context, *ChangePa
 }
 func (UnimplementedVendorSeviceServer) GetVendorDashboard(context.Context, *GetVendorDashboardRequest) (*GetVendorDashboardResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVendorDashboard not implemented")
+}
+func (UnimplementedVendorSeviceServer) GetVendorServices(context.Context, *GetVendorServicesRequest) (*GetVendorServicesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVendorServices not implemented")
 }
 func (UnimplementedVendorSeviceServer) mustEmbedUnimplementedVendorSeviceServer() {}
 func (UnimplementedVendorSeviceServer) testEmbeddedByValue()                      {}
@@ -410,6 +426,24 @@ func _VendorSevice_GetVendorDashboard_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorSevice_GetVendorServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVendorServicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).GetVendorServices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VendorSevice_GetVendorServices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).GetVendorServices(ctx, req.(*GetVendorServicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorSevice_ServiceDesc is the grpc.ServiceDesc for VendorSevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -456,6 +490,10 @@ var VendorSevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetVendorDashboard",
 			Handler:    _VendorSevice_GetVendorDashboard_Handler,
+		},
+		{
+			MethodName: "GetVendorServices",
+			Handler:    _VendorSevice_GetVendorServices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
