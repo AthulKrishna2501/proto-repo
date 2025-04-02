@@ -18,6 +18,8 @@ service VendorSevice {
   rpc UpdateService(UpdateServiceRequest) returns (UpdateServiceResponse);
   rpc DeleteService(DeleteServiceRequest) returns (DeleteServiceResponse);
   rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc GetVendorDashboard(GetVendorDashboardRequest) returns (GetVendorDashboardResponse);
+
 
 
 
@@ -137,12 +139,22 @@ message DeleteServiceResponse {
 }
 
 message ChangePasswordRequest {
-  string vendor_id = 1;        
-  string current_password = 2; 
-  string new_password = 3;   
-  string confirm_password = 4; 
+  string vendor_id = 1;
+  string current_password = 2;
+  string new_password = 3;
+  string confirm_password = 4;
 }
 
 message ChangePasswordResponse {
-  string message = 1; 
+  string message = 1;
+}
+
+message GetVendorDashboardRequest {
+    string vendor_id = 1;
+}
+
+message GetVendorDashboardResponse {
+    int64 total_clients_served = 1;
+    int64 total_bookings = 2;
+    int64 total_revenue = 3;
 }
