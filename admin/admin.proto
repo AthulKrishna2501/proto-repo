@@ -12,6 +12,7 @@ service AdminService {
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
   rpc ViewRequests(ViewRequestsReq) returns (ViewRequestsResponse);
   rpc AddCategory(AddCategoryRequest) returns (AddCategoryResponse);
+  rpc ListCategory(ListCategoryRequest) returns (ListCategoryResponse);
   rpc ViewAdminWallet(ViewAdminWalletRequest) returns (ViewAdminWalletResponse);
   rpc AdminDashBoard(AdminDashBoardRequest) returns (AdminDashBoardResponse);
 
@@ -82,4 +83,17 @@ message AdminDashBoardResponse {
   int32 total_clients = 2;
   int32 total_bookings = 3;
   int64 total_revenue = 4;
+}
+
+message ListCategoryRequest {}
+
+message ListCategoryResponse {
+  repeated Category categories = 1;
+}
+
+message Category {
+  string category_id = 1;
+  string category_name = 2;
+  string title = 3;
+  string image = 4;
 }
