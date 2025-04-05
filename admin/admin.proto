@@ -53,6 +53,7 @@ message ViewRequestsReq {}
 message CategoryRequest {
   string vendor_id = 1;
   string category_id = 2;
+  string name = 3;
 }
 
 message ViewRequestsResponse {
