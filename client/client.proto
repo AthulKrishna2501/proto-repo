@@ -9,6 +9,7 @@ service ClientService {
   rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse) {}
   rpc HandleStripeEvent(StripeWebhookRequest) returns (StripeWebhookResponse) {}
   rpc VerifyPayment(VerifyPaymentRequest) returns (VerifyPaymentResponse) {}
+  rpc ClientDashboard(LandingPageRequest) returns (LandingPageResponse) {}
 
 }
 
@@ -40,4 +41,40 @@ message VerifyPaymentRequest {
 message VerifyPaymentResponse {
   bool success = 1;
   string message = 2;
+}
+
+message Category {
+  string category_id = 1;
+  string category_name = 2;
+  string image = 3;
+}
+
+message Event {
+  string event_id = 1;
+  string title = 2;
+  string date = 3;
+  string location = 4;
+  string description = 5;
+  string image = 6;
+}
+
+message Vendor {
+  string vendor_id = 1;
+  string name = 2;
+  string category = 3;
+  string bio = 4;
+  string image = 5;
+}
+
+message LandingPageData {
+  repeated Category categories = 1;
+  repeated Event upcoming_events = 2;
+  repeated Vendor featured_vendors = 3;
+}
+
+message LandingPageRequest {}
+
+message LandingPageResponse {
+  bool success = 1;
+  LandingPageData data = 2;
 }

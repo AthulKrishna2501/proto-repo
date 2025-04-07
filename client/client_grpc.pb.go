@@ -22,6 +22,7 @@ const (
 	ClientService_GetMasterOfCeremony_FullMethodName = "/client.ClientService/GetMasterOfCeremony"
 	ClientService_HandleStripeEvent_FullMethodName   = "/client.ClientService/HandleStripeEvent"
 	ClientService_VerifyPayment_FullMethodName       = "/client.ClientService/VerifyPayment"
+	ClientService_ClientDashboard_FullMethodName     = "/client.ClientService/ClientDashboard"
 )
 
 // ClientServiceClient is the client API for ClientService service.
@@ -31,6 +32,7 @@ type ClientServiceClient interface {
 	GetMasterOfCeremony(ctx context.Context, in *MasterOfCeremonyRequest, opts ...grpc.CallOption) (*MasterOfCeremonyResponse, error)
 	HandleStripeEvent(ctx context.Context, in *StripeWebhookRequest, opts ...grpc.CallOption) (*StripeWebhookResponse, error)
 	VerifyPayment(ctx context.Context, in *VerifyPaymentRequest, opts ...grpc.CallOption) (*VerifyPaymentResponse, error)
+	ClientDashboard(ctx context.Context, in *LandingPageRequest, opts ...grpc.CallOption) (*LandingPageResponse, error)
 }
 
 type clientServiceClient struct {
@@ -71,6 +73,16 @@ func (c *clientServiceClient) VerifyPayment(ctx context.Context, in *VerifyPayme
 	return out, nil
 }
 
+func (c *clientServiceClient) ClientDashboard(ctx context.Context, in *LandingPageRequest, opts ...grpc.CallOption) (*LandingPageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LandingPageResponse)
+	err := c.cc.Invoke(ctx, ClientService_ClientDashboard_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type ClientServiceServer interface {
 	GetMasterOfCeremony(context.Context, *MasterOfCeremonyRequest) (*MasterOfCeremonyResponse, error)
 	HandleStripeEvent(context.Context, *StripeWebhookRequest) (*StripeWebhookResponse, error)
 	VerifyPayment(context.Context, *VerifyPaymentRequest) (*VerifyPaymentResponse, error)
+	ClientDashboard(context.Context, *LandingPageRequest) (*LandingPageResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedClientServiceServer) HandleStripeEvent(context.Context, *Stri
 }
 func (UnimplementedClientServiceServer) VerifyPayment(context.Context, *VerifyPaymentRequest) (*VerifyPaymentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method VerifyPayment not implemented")
+}
+func (UnimplementedClientServiceServer) ClientDashboard(context.Context, *LandingPageRequest) (*LandingPageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClientDashboard not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 func (UnimplementedClientServiceServer) testEmbeddedByValue()                       {}
@@ -172,6 +188,24 @@ func _ClientService_VerifyPayment_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_ClientDashboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LandingPageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).ClientDashboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_ClientDashboard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).ClientDashboard(ctx, req.(*LandingPageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VerifyPayment",
 			Handler:    _ClientService_VerifyPayment_Handler,
+		},
+		{
+			MethodName: "ClientDashboard",
+			Handler:    _ClientService_ClientDashboard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
