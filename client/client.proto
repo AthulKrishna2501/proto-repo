@@ -95,7 +95,7 @@ message LandingPageResponse {
 message CreateEventRequest {
   string event_id = 1;
   string title = 2;
-  string date = 3;
+  google.protobuf.Timestamp date = 3;
   Location location = 4;
   EventDetails event_details = 5;
   string hosted_by = 6;
