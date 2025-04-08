@@ -5,11 +5,16 @@ package client;
 
 option go_package = "./client/";
 
+import "google/protobuf/timestamp.proto";
+
+
 service ClientService {
-  rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse) {}
-  rpc HandleStripeEvent(StripeWebhookRequest) returns (StripeWebhookResponse) {}
-  rpc VerifyPayment(VerifyPaymentRequest) returns (VerifyPaymentResponse) {}
-  rpc ClientDashboard(LandingPageRequest) returns (LandingPageResponse) {}
+  rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse);
+  rpc HandleStripeEvent(StripeWebhookRequest) returns (StripeWebhookResponse);
+  rpc VerifyPayment(VerifyPaymentRequest) returns (VerifyPaymentResponse);
+  rpc ClientDashboard(LandingPageRequest) returns (LandingPageResponse);
+  rpc CreateEvent(CreateEventRequest) returns (CreateEventResponse);
+
 
 }
 
@@ -87,3 +92,24 @@ message LandingPageResponse {
   LandingPageData data = 2;
 }
 
+message CreateEventRequest {
+  string title = 1;
+  string date = 2;
+  Location location = 3;
+  EventDetails event_details = 4;
+  string hosted_by = 5;
+}
+
+message EventDetails {
+  string description = 1;
+  google.protobuf.Timestamp start_time = 2;
+  google.protobuf.Timestamp end_time = 3;
+  string poster_image = 4;
+  int32 price_per_ticket = 5;
+  int32 ticket_limit = 6;
+}
+
+message CreateEventResponse {
+  string event_id = 1;
+  string message = 2;
+}

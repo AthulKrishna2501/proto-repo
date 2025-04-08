@@ -23,6 +23,7 @@ const (
 	ClientService_HandleStripeEvent_FullMethodName   = "/client.ClientService/HandleStripeEvent"
 	ClientService_VerifyPayment_FullMethodName       = "/client.ClientService/VerifyPayment"
 	ClientService_ClientDashboard_FullMethodName     = "/client.ClientService/ClientDashboard"
+	ClientService_CreateEvent_FullMethodName         = "/client.ClientService/CreateEvent"
 )
 
 // ClientServiceClient is the client API for ClientService service.
@@ -33,6 +34,7 @@ type ClientServiceClient interface {
 	HandleStripeEvent(ctx context.Context, in *StripeWebhookRequest, opts ...grpc.CallOption) (*StripeWebhookResponse, error)
 	VerifyPayment(ctx context.Context, in *VerifyPaymentRequest, opts ...grpc.CallOption) (*VerifyPaymentResponse, error)
 	ClientDashboard(ctx context.Context, in *LandingPageRequest, opts ...grpc.CallOption) (*LandingPageResponse, error)
+	CreateEvent(ctx context.Context, in *CreateEventRequest, opts ...grpc.CallOption) (*CreateEventResponse, error)
 }
 
 type clientServiceClient struct {
@@ -83,6 +85,16 @@ func (c *clientServiceClient) ClientDashboard(ctx context.Context, in *LandingPa
 	return out, nil
 }
 
+func (c *clientServiceClient) CreateEvent(ctx context.Context, in *CreateEventRequest, opts ...grpc.CallOption) (*CreateEventResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateEventResponse)
+	err := c.cc.Invoke(ctx, ClientService_CreateEvent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type ClientServiceServer interface {
 	HandleStripeEvent(context.Context, *StripeWebhookRequest) (*StripeWebhookResponse, error)
 	VerifyPayment(context.Context, *VerifyPaymentRequest) (*VerifyPaymentResponse, error)
 	ClientDashboard(context.Context, *LandingPageRequest) (*LandingPageResponse, error)
+	CreateEvent(context.Context, *CreateEventRequest) (*CreateEventResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedClientServiceServer) VerifyPayment(context.Context, *VerifyPa
 }
 func (UnimplementedClientServiceServer) ClientDashboard(context.Context, *LandingPageRequest) (*LandingPageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClientDashboard not implemented")
+}
+func (UnimplementedClientServiceServer) CreateEvent(context.Context, *CreateEventRequest) (*CreateEventResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEvent not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 func (UnimplementedClientServiceServer) testEmbeddedByValue()                       {}
@@ -206,6 +222,24 @@ func _ClientService_ClientDashboard_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_CreateEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEventRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).CreateEvent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_CreateEvent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).CreateEvent(ctx, req.(*CreateEventRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ClientDashboard",
 			Handler:    _ClientService_ClientDashboard_Handler,
+		},
+		{
+			MethodName: "CreateEvent",
+			Handler:    _ClientService_CreateEvent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
