@@ -93,23 +93,24 @@ message LandingPageResponse {
 }
 
 message CreateEventRequest {
-  string title = 1;
-  string date = 2;
-  Location location = 3;
-  EventDetails event_details = 4;
-  string hosted_by = 5;
+  string event_id = 1;
+  string title = 2;
+  string date = 3;
+  Location location = 4;
+  EventDetails event_details = 5;
+  string hosted_by = 6;
 }
 
 message EventDetails {
-  string description = 1;
-  google.protobuf.Timestamp start_time = 2;
-  google.protobuf.Timestamp end_time = 3;
-  string poster_image = 4;
-  int32 price_per_ticket = 5;
-  int32 ticket_limit = 6;
+  string event_id = 1;
+  string description = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+  string poster_image = 5;
+  int32 price_per_ticket = 6;
+  int32 ticket_limit = 7;
 }
 
 message CreateEventResponse {
-  string event_id = 1;
   string message = 2;
 }
