@@ -53,7 +53,7 @@ message Event {
   string event_id = 1;
   string title = 2;
   string date = 3;
-  string location = 4;
+  Location location = 4;
   string description = 5;
   string image = 6;
 }
@@ -64,6 +64,14 @@ message Vendor {
   string category = 3;
   string bio = 4;
   string image = 5;
+}
+
+message Location {
+  string address = 1;
+  string city = 2;
+  string country = 3;
+  double latitude = 4;
+  double longitude = 5;
 }
 
 message LandingPageData {
@@ -78,3 +86,4 @@ message LandingPageResponse {
   bool success = 1;
   LandingPageData data = 2;
 }
+
