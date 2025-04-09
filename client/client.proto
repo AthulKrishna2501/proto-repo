@@ -14,6 +14,7 @@ service ClientService {
   rpc VerifyPayment(VerifyPaymentRequest) returns (VerifyPaymentResponse);
   rpc ClientDashboard(LandingPageRequest) returns (LandingPageResponse);
   rpc CreateEvent(CreateEventRequest) returns (CreateEventResponse);
+  rpc EditEvent(EditEventRequest) returns (EditEventResponse);
 
 
 }
@@ -113,4 +114,17 @@ message EventDetails {
 
 message CreateEventResponse {
   string message = 2;
+}
+
+message EditEventRequest {
+    string event_id = 1;
+    string title = 2;
+    google.protobuf.Timestamp date = 3;
+    string hosted_by = 4;
+    Location location = 5;
+    EventDetails event_details = 6;
+}
+
+message EditEventResponse {
+    string message = 1;
 }

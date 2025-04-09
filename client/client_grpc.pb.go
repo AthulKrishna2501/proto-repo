@@ -24,6 +24,7 @@ const (
 	ClientService_VerifyPayment_FullMethodName       = "/client.ClientService/VerifyPayment"
 	ClientService_ClientDashboard_FullMethodName     = "/client.ClientService/ClientDashboard"
 	ClientService_CreateEvent_FullMethodName         = "/client.ClientService/CreateEvent"
+	ClientService_EditEvent_FullMethodName           = "/client.ClientService/EditEvent"
 )
 
 // ClientServiceClient is the client API for ClientService service.
@@ -35,6 +36,7 @@ type ClientServiceClient interface {
 	VerifyPayment(ctx context.Context, in *VerifyPaymentRequest, opts ...grpc.CallOption) (*VerifyPaymentResponse, error)
 	ClientDashboard(ctx context.Context, in *LandingPageRequest, opts ...grpc.CallOption) (*LandingPageResponse, error)
 	CreateEvent(ctx context.Context, in *CreateEventRequest, opts ...grpc.CallOption) (*CreateEventResponse, error)
+	EditEvent(ctx context.Context, in *EditEventRequest, opts ...grpc.CallOption) (*EditEventResponse, error)
 }
 
 type clientServiceClient struct {
@@ -95,6 +97,16 @@ func (c *clientServiceClient) CreateEvent(ctx context.Context, in *CreateEventRe
 	return out, nil
 }
 
+func (c *clientServiceClient) EditEvent(ctx context.Context, in *EditEventRequest, opts ...grpc.CallOption) (*EditEventResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EditEventResponse)
+	err := c.cc.Invoke(ctx, ClientService_EditEvent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type ClientServiceServer interface {
 	VerifyPayment(context.Context, *VerifyPaymentRequest) (*VerifyPaymentResponse, error)
 	ClientDashboard(context.Context, *LandingPageRequest) (*LandingPageResponse, error)
 	CreateEvent(context.Context, *CreateEventRequest) (*CreateEventResponse, error)
+	EditEvent(context.Context, *EditEventRequest) (*EditEventResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -128,6 +141,9 @@ func (UnimplementedClientServiceServer) ClientDashboard(context.Context, *Landin
 }
 func (UnimplementedClientServiceServer) CreateEvent(context.Context, *CreateEventRequest) (*CreateEventResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateEvent not implemented")
+}
+func (UnimplementedClientServiceServer) EditEvent(context.Context, *EditEventRequest) (*EditEventResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditEvent not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 func (UnimplementedClientServiceServer) testEmbeddedByValue()                       {}
@@ -240,6 +256,24 @@ func _ClientService_CreateEvent_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_EditEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditEventRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).EditEvent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_EditEvent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).EditEvent(ctx, req.(*EditEventRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +300,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateEvent",
 			Handler:    _ClientService_CreateEvent_Handler,
+		},
+		{
+			MethodName: "EditEvent",
+			Handler:    _ClientService_EditEvent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
