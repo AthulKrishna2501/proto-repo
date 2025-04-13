@@ -4,7 +4,7 @@ package client;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "./client/";
+option go_package = "github.com/AthulKrishna2501/proto-repo/client;client";
 
 service ClientService {
   rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse);
