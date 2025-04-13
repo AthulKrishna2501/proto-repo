@@ -1167,7 +1167,7 @@ type GetClientProfileRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ClientId string `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"` // The ID of the client
+	ClientId string `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 }
 
 func (x *GetClientProfileRequest) Reset() {
@@ -1209,7 +1209,6 @@ func (x *GetClientProfileRequest) GetClientId() string {
 	return ""
 }
 
-// Response for GetClientProfile
 type GetClientProfileResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1321,13 +1320,12 @@ func (x *GetClientProfileResponse) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-// Request for EditClientProfile
 type EditClientProfileRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ClientId     string `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"` // The ID of the client
+	ClientId     string `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	FirstName    string `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	LastName     string `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	Place        string `protobuf:"bytes,4,opt,name=place,proto3" json:"place,omitempty"`
@@ -1417,13 +1415,12 @@ func (x *EditClientProfileRequest) GetPhoneNumber() string {
 	return ""
 }
 
-// Response for EditClientProfile
 type EditClientProfileResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Message string `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"` // Success or error message
+	Message string `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (x *EditClientProfileResponse) Reset() {

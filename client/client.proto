@@ -3,9 +3,10 @@ syntax = "proto3";
 
 package client;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "./client/";
 
-import "google/protobuf/timestamp.proto";
 
 
 service ClientService {
@@ -131,12 +132,11 @@ message EditEventResponse {
     string message = 1;
 }
 
-
 message GetClientProfileRequest {
-  string client_id = 1; // The ID of the client
+  string client_id = 1; 
 }
 
-// Response for GetClientProfile
+
 message GetClientProfileResponse {
   string client_id = 1;
   string first_name = 2;
@@ -149,9 +149,8 @@ message GetClientProfileResponse {
   google.protobuf.Timestamp updated_at = 9;
 }
 
-// Request for EditClientProfile
 message EditClientProfileRequest {
-  string client_id = 1; // The ID of the client
+  string client_id = 1; 
   string first_name = 2;
   string last_name = 3;
   string place = 4;
@@ -160,7 +159,6 @@ message EditClientProfileRequest {
   string phone_number = 7;
 }
 
-// Response for EditClientProfile
 message EditClientProfileResponse {
-  string message = 1; // Success or error message
+  string message = 1; 
 }
