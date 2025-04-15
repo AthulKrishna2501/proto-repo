@@ -16,6 +16,9 @@ service ClientService {
   rpc GetClientProfile (GetClientProfileRequest) returns (GetClientProfileResponse);
   rpc EditClientProfile (EditClientProfileRequest) returns (EditClientProfileResponse);
   rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse);
+  rpc GetBookings (GetBookingsRequest) returns (GetBookingsResponse);
+
+
 }
 
 message MasterOfCeremonyRequest {
@@ -163,4 +166,27 @@ message ResetPasswordRequest {
 
 message ResetPasswordResponse {
   string message = 1; 
+}
+
+message GetBookingsRequest {
+  string client_id = 1; 
+}
+
+message GetBookingsResponse {
+  repeated Booking bookings = 1;
+}
+
+message Booking {
+  string booking_id = 1;
+  Client client = 2;
+  Vendor vendor = 3;
+  string service = 4;
+  google.protobuf.Timestamp date = 5;
+  int32 price = 6;
+  string status = 7;
+}
+
+message Client {
+  string first_name = 1;
+  string last_name = 2;
 }
