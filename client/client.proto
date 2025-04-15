@@ -16,9 +16,6 @@ service ClientService {
   rpc GetClientProfile (GetClientProfileRequest) returns (GetClientProfileResponse);
   rpc EditClientProfile (EditClientProfileRequest) returns (EditClientProfileResponse);
   rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse);
-
-
-
 }
 
 message MasterOfCeremonyRequest {
@@ -29,7 +26,6 @@ message MasterOfCeremonyRequest {
 message MasterOfCeremonyResponse {
   string url = 1;
 }
-
 
 message StripeWebhookRequest {
   string event_type = 1;
@@ -133,7 +129,6 @@ message EditEventResponse {
 message GetClientProfileRequest {
   string client_id = 1; 
 }
-
 
 message GetClientProfileResponse {
   string client_id = 1;
