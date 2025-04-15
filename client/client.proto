@@ -15,6 +15,8 @@ service ClientService {
   rpc EditEvent(EditEventRequest) returns (EditEventResponse);
   rpc GetClientProfile (GetClientProfileRequest) returns (GetClientProfileResponse);
   rpc EditClientProfile (EditClientProfileRequest) returns (EditClientProfileResponse);
+  rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse);
+
 
 
 }
@@ -154,5 +156,16 @@ message EditClientProfileRequest {
 }
 
 message EditClientProfileResponse {
+  string message = 1; 
+}
+
+message ResetPasswordRequest {
+  string client_id = 1;          
+  string current_password = 2;  
+  string new_password = 3;
+  string confirm_password = 4;    
+}
+
+message ResetPasswordResponse {
   string message = 1; 
 }

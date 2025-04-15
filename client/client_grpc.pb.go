@@ -26,6 +26,7 @@ type ClientServiceClient interface {
 	EditEvent(ctx context.Context, in *EditEventRequest, opts ...grpc.CallOption) (*EditEventResponse, error)
 	GetClientProfile(ctx context.Context, in *GetClientProfileRequest, opts ...grpc.CallOption) (*GetClientProfileResponse, error)
 	EditClientProfile(ctx context.Context, in *EditClientProfileRequest, opts ...grpc.CallOption) (*EditClientProfileResponse, error)
+	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error)
 }
 
 type clientServiceClient struct {
@@ -108,6 +109,15 @@ func (c *clientServiceClient) EditClientProfile(ctx context.Context, in *EditCli
 	return out, nil
 }
 
+func (c *clientServiceClient) ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error) {
+	out := new(ResetPasswordResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/ResetPassword", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -120,6 +130,7 @@ type ClientServiceServer interface {
 	EditEvent(context.Context, *EditEventRequest) (*EditEventResponse, error)
 	GetClientProfile(context.Context, *GetClientProfileRequest) (*GetClientProfileResponse, error)
 	EditClientProfile(context.Context, *EditClientProfileRequest) (*EditClientProfileResponse, error)
+	ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -150,6 +161,9 @@ func (UnimplementedClientServiceServer) GetClientProfile(context.Context, *GetCl
 }
 func (UnimplementedClientServiceServer) EditClientProfile(context.Context, *EditClientProfileRequest) (*EditClientProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditClientProfile not implemented")
+}
+func (UnimplementedClientServiceServer) ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetPassword not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -308,6 +322,24 @@ func _ClientService_EditClientProfile_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_ResetPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).ResetPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/client.ClientService/ResetPassword",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).ResetPassword(ctx, req.(*ResetPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -346,6 +378,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EditClientProfile",
 			Handler:    _ClientService_EditClientProfile_Handler,
+		},
+		{
+			MethodName: "ResetPassword",
+			Handler:    _ClientService_ResetPassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
