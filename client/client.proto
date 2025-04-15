@@ -137,7 +137,6 @@ message GetClientProfileResponse {
   string client_id = 1;
   string first_name = 2;
   string last_name = 3;
-  string place = 4;
   string email = 5;
   string profile_image = 6;
   string phone_number = 7;
@@ -149,7 +148,6 @@ message EditClientProfileRequest {
   string client_id = 1; 
   string first_name = 2;
   string last_name = 3;
-  string place = 4;
   string email = 5;
   string profile_image = 6;
   string phone_number = 7;
