@@ -32,6 +32,7 @@ type ClientServiceClient interface {
 	GetVendorsByCategory(ctx context.Context, in *GetVendorsByCategoryRequest, opts ...grpc.CallOption) (*GetVendorsByCategoryResponse, error)
 	GetHostedEvents(ctx context.Context, in *GetHostedEventsRequest, opts ...grpc.CallOption) (*GetHostedEventsResponse, error)
 	GetUpcomingEvents(ctx context.Context, in *GetUpcomingEventsRequest, opts ...grpc.CallOption) (*GetUpcomingEventsResponse, error)
+	GetVendorProfile(ctx context.Context, in *GetVendorProfileRequest, opts ...grpc.CallOption) (*GetVendorProfileResponse, error)
 }
 
 type clientServiceClient struct {
@@ -168,6 +169,15 @@ func (c *clientServiceClient) GetUpcomingEvents(ctx context.Context, in *GetUpco
 	return out, nil
 }
 
+func (c *clientServiceClient) GetVendorProfile(ctx context.Context, in *GetVendorProfileRequest, opts ...grpc.CallOption) (*GetVendorProfileResponse, error) {
+	out := new(GetVendorProfileResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/GetVendorProfile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -186,6 +196,7 @@ type ClientServiceServer interface {
 	GetVendorsByCategory(context.Context, *GetVendorsByCategoryRequest) (*GetVendorsByCategoryResponse, error)
 	GetHostedEvents(context.Context, *GetHostedEventsRequest) (*GetHostedEventsResponse, error)
 	GetUpcomingEvents(context.Context, *GetUpcomingEventsRequest) (*GetUpcomingEventsResponse, error)
+	GetVendorProfile(context.Context, *GetVendorProfileRequest) (*GetVendorProfileResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -234,6 +245,9 @@ func (UnimplementedClientServiceServer) GetHostedEvents(context.Context, *GetHos
 }
 func (UnimplementedClientServiceServer) GetUpcomingEvents(context.Context, *GetUpcomingEventsRequest) (*GetUpcomingEventsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUpcomingEvents not implemented")
+}
+func (UnimplementedClientServiceServer) GetVendorProfile(context.Context, *GetVendorProfileRequest) (*GetVendorProfileResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVendorProfile not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -500,6 +514,24 @@ func _ClientService_GetUpcomingEvents_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_GetVendorProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVendorProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).GetVendorProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/client.ClientService/GetVendorProfile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).GetVendorProfile(ctx, req.(*GetVendorProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -562,6 +594,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUpcomingEvents",
 			Handler:    _ClientService_GetUpcomingEvents_Handler,
+		},
+		{
+			MethodName: "GetVendorProfile",
+			Handler:    _ClientService_GetVendorProfile_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

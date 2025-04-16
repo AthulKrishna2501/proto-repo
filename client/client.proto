@@ -21,6 +21,8 @@ service ClientService {
   rpc GetVendorsByCategory (GetVendorsByCategoryRequest) returns (GetVendorsByCategoryResponse);
   rpc GetHostedEvents (GetHostedEventsRequest) returns (GetHostedEventsResponse);
   rpc GetUpcomingEvents (GetUpcomingEventsRequest) returns (GetUpcomingEventsResponse);
+  rpc GetVendorProfile (GetVendorProfileRequest) returns (GetVendorProfileResponse);
+
 
 }
 
@@ -264,4 +266,26 @@ message UpcomingEvent {
   int32 price_per_ticket = 7;
   int32 tickets_sold = 8;
   int32 ticket_limit = 9;
+}
+
+message GetVendorProfileRequest {
+  string vendor_id = 1; 
+}
+
+message GetVendorProfileResponse {
+  VendorDetails vendor_details = 1;
+}
+
+message VendorDetails {
+  string vendor_id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string gender = 4;
+  string email = 5;
+  string phone_number = 6;
+  repeated Category categories = 7;
+  string bio = 8;
+  string profile_image = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
 }
