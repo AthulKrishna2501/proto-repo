@@ -29,7 +29,6 @@ type ClientServiceClient interface {
 	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error)
 	GetBookings(ctx context.Context, in *GetBookingsRequest, opts ...grpc.CallOption) (*GetBookingsResponse, error)
 	BookVendor(ctx context.Context, in *BookVendorRequest, opts ...grpc.CallOption) (*BookVendorResponse, error)
-	GetClientBookings(ctx context.Context, in *GetClientBookingsRequest, opts ...grpc.CallOption) (*GetClientBookingsResponse, error)
 }
 
 type clientServiceClient struct {
@@ -139,15 +138,6 @@ func (c *clientServiceClient) BookVendor(ctx context.Context, in *BookVendorRequ
 	return out, nil
 }
 
-func (c *clientServiceClient) GetClientBookings(ctx context.Context, in *GetClientBookingsRequest, opts ...grpc.CallOption) (*GetClientBookingsResponse, error) {
-	out := new(GetClientBookingsResponse)
-	err := c.cc.Invoke(ctx, "/client.ClientService/GetClientBookings", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -163,7 +153,6 @@ type ClientServiceServer interface {
 	ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error)
 	GetBookings(context.Context, *GetBookingsRequest) (*GetBookingsResponse, error)
 	BookVendor(context.Context, *BookVendorRequest) (*BookVendorResponse, error)
-	GetClientBookings(context.Context, *GetClientBookingsRequest) (*GetClientBookingsResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -203,9 +192,6 @@ func (UnimplementedClientServiceServer) GetBookings(context.Context, *GetBooking
 }
 func (UnimplementedClientServiceServer) BookVendor(context.Context, *BookVendorRequest) (*BookVendorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BookVendor not implemented")
-}
-func (UnimplementedClientServiceServer) GetClientBookings(context.Context, *GetClientBookingsRequest) (*GetClientBookingsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetClientBookings not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -418,24 +404,6 @@ func _ClientService_BookVendor_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ClientService_GetClientBookings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetClientBookingsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ClientServiceServer).GetClientBookings(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/client.ClientService/GetClientBookings",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientServiceServer).GetClientBookings(ctx, req.(*GetClientBookingsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -486,10 +454,6 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BookVendor",
 			Handler:    _ClientService_BookVendor_Handler,
-		},
-		{
-			MethodName: "GetClientBookings",
-			Handler:    _ClientService_GetClientBookings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
