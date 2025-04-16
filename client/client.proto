@@ -17,7 +17,7 @@ service ClientService {
   rpc EditClientProfile (EditClientProfileRequest) returns (EditClientProfileResponse);
   rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse);
   rpc GetBookings (GetBookingsRequest) returns (GetBookingsResponse);
-
+  rpc BookVendor (BookVendorRequest) returns (BookVendorResponse);
 
 }
 
@@ -189,4 +189,15 @@ message Booking {
 message Client {
   string first_name = 1;
   string last_name = 2;
+}
+
+message BookVendorRequest {
+  string client_id = 1; 
+  string vendor_id = 2; 
+  string service = 3;  
+  google.protobuf.Timestamp date = 4;
+}
+
+message BookVendorResponse {
+  string message = 1; 
 }
