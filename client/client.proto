@@ -20,8 +20,7 @@ service ClientService {
   rpc BookVendor (BookVendorRequest) returns (BookVendorResponse);
   rpc GetVendorsByCategory (GetVendorsByCategoryRequest) returns (GetVendorsByCategoryResponse);
   rpc GetHostedEvents (GetHostedEventsRequest) returns (GetHostedEventsResponse);
-
-  
+  rpc GetUpcomingEvents (GetUpcomingEventsRequest) returns (GetUpcomingEventsResponse);
 
 }
 
@@ -247,4 +246,19 @@ message HostedEvent {
   int32 price_per_ticket = 6;
   int32 tickets_sold = 7;
   int32 ticket_limit = 8;
+}
+
+message GetUpcomingEventsRequest {}
+
+message GetUpcomingEventsResponse {
+  repeated UpcomingEvent events = 1; 
+}
+
+message UpcomingEvent {
+  string event_id = 1;
+  string title = 2;
+  google.protobuf.Timestamp date = 3;
+  string location = 4;
+  string description = 5;
+  string poster_image = 6;
 }
