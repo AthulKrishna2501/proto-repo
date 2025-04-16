@@ -258,7 +258,10 @@ message UpcomingEvent {
   string event_id = 1;
   string title = 2;
   google.protobuf.Timestamp date = 3;
-  string location = 4;
+  Location location = 4;
   string description = 5;
   string poster_image = 6;
+  int32 price_per_ticket = 7;
+  int32 tickets_sold = 8;
+  int32 ticket_limit = 9;
 }
