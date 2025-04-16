@@ -208,7 +208,15 @@ message GetVendorsByCategoryRequest {
 }
 
 message GetVendorsByCategoryResponse {
-  repeated Vendor vendors = 1; 
+  repeated VendorWithServices vendors = 1; 
+}
+
+message VendorWithServices {
+  string vendor_id = 1;
+  string name = 2;
+  repeated string categories = 3;
+  string bio = 4;
+  repeated Service services = 5; 
 }
 
 message Service {
