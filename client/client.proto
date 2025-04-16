@@ -288,4 +288,5 @@ message VendorDetails {
   string profile_image = 9;
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
+  repeated Service services = 12;
 }
