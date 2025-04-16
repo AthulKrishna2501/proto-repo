@@ -4,9 +4,7 @@ package vendor;
 
 import "google/protobuf/timestamp.proto";
 
-
-
-option go_package = "./vendor/";
+option go_package = "./vendor;vendor";
 
 service VendorSevice {
   rpc RequestCategory(RequestCategoryRequest) returns (RequestCategoryResponse);
@@ -20,6 +18,8 @@ service VendorSevice {
   rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
   rpc GetVendorDashboard(GetVendorDashboardRequest) returns (GetVendorDashboardResponse);
   rpc GetVendorServices(GetVendorServicesRequest) returns (GetVendorServicesResponse);
+  rpc GetBookingRequests (GetBookingRequestsRequest) returns (GetBookingRequestsResponse);
+
 
 }
 
@@ -174,4 +174,21 @@ message Service {
 
 message GetVendorServicesResponse {
   repeated Service services = 1;
+}
+
+message GetBookingRequestsRequest {
+  string vendor_id = 1; 
+}
+
+message GetBookingRequestsResponse {
+  repeated BookingRequest bookings = 1;
+}
+
+message BookingRequest {
+  string booking_id = 1;
+  string client_name = 2;
+  string service = 3;
+  google.protobuf.Timestamp date = 4;
+  int32 price = 5;
+  string status = 6; 
 }
