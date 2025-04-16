@@ -2178,6 +2178,203 @@ func (x *Service) GetServicePrice() float64 {
 	return 0
 }
 
+type GetHostedEventsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ClientId string `protobuf:"bytes,1,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
+}
+
+func (x *GetHostedEventsRequest) Reset() {
+	*x = GetHostedEventsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetHostedEventsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetHostedEventsRequest) ProtoMessage() {}
+
+func (x *GetHostedEventsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetHostedEventsRequest.ProtoReflect.Descriptor instead.
+func (*GetHostedEventsRequest) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *GetHostedEventsRequest) GetClientId() string {
+	if x != nil {
+		return x.ClientId
+	}
+	return ""
+}
+
+type GetHostedEventsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Events []*HostedEvent `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+}
+
+func (x *GetHostedEventsResponse) Reset() {
+	*x = GetHostedEventsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetHostedEventsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetHostedEventsResponse) ProtoMessage() {}
+
+func (x *GetHostedEventsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetHostedEventsResponse.ProtoReflect.Descriptor instead.
+func (*GetHostedEventsResponse) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *GetHostedEventsResponse) GetEvents() []*HostedEvent {
+	if x != nil {
+		return x.Events
+	}
+	return nil
+}
+
+type HostedEvent struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	EventId        string                 `protobuf:"bytes,1,opt,name=event_id,json=eventId,proto3" json:"event_id,omitempty"`
+	Title          string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Location       *Location              `protobuf:"bytes,3,opt,name=location,proto3" json:"location,omitempty"`
+	Date           *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=date,proto3" json:"date,omitempty"`
+	Description    string                 `protobuf:"bytes,5,opt,name=description,proto3" json:"description,omitempty"`
+	PricePerTicket int32                  `protobuf:"varint,6,opt,name=price_per_ticket,json=pricePerTicket,proto3" json:"price_per_ticket,omitempty"`
+	TicketsSold    int32                  `protobuf:"varint,7,opt,name=tickets_sold,json=ticketsSold,proto3" json:"tickets_sold,omitempty"`
+	TicketLimit    int32                  `protobuf:"varint,8,opt,name=ticket_limit,json=ticketLimit,proto3" json:"ticket_limit,omitempty"`
+}
+
+func (x *HostedEvent) Reset() {
+	*x = HostedEvent{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HostedEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HostedEvent) ProtoMessage() {}
+
+func (x *HostedEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HostedEvent.ProtoReflect.Descriptor instead.
+func (*HostedEvent) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *HostedEvent) GetEventId() string {
+	if x != nil {
+		return x.EventId
+	}
+	return ""
+}
+
+func (x *HostedEvent) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *HostedEvent) GetLocation() *Location {
+	if x != nil {
+		return x.Location
+	}
+	return nil
+}
+
+func (x *HostedEvent) GetDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Date
+	}
+	return nil
+}
+
+func (x *HostedEvent) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *HostedEvent) GetPricePerTicket() int32 {
+	if x != nil {
+		return x.PricePerTicket
+	}
+	return 0
+}
+
+func (x *HostedEvent) GetTicketsSold() int32 {
+	if x != nil {
+		return x.TicketsSold
+	}
+	return 0
+}
+
+func (x *HostedEvent) GetTicketLimit() int32 {
+	if x != nil {
+		return x.TicketLimit
+	}
+	return 0
+}
+
 var File_client_client_proto protoreflect.FileDescriptor
 
 var file_client_client_proto_rawDesc = []byte{
@@ -2447,7 +2644,34 @@ var file_client_client_proto_rawDesc = []byte{
 	0x28, 0x09, 0x52, 0x12, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x44, 0x65, 0x73, 0x63, 0x72,
 	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
 	0x65, 0x5f, 0x70, 0x72, 0x69, 0x63, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x73,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x69, 0x63, 0x65, 0x32, 0xce, 0x07, 0x0a, 0x0d,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x50, 0x72, 0x69, 0x63, 0x65, 0x22, 0x35, 0x0a, 0x16, 0x47,
+	0x65, 0x74, 0x48, 0x6f, 0x73, 0x74, 0x65, 0x64, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74,
+	0x49, 0x64, 0x22, 0x46, 0x0a, 0x17, 0x47, 0x65, 0x74, 0x48, 0x6f, 0x73, 0x74, 0x65, 0x64, 0x45,
+	0x76, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2b, 0x0a,
+	0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x13, 0x2e,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x48, 0x6f, 0x73, 0x74, 0x65, 0x64, 0x45, 0x76, 0x65,
+	0x6e, 0x74, 0x52, 0x06, 0x65, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x22, 0xae, 0x02, 0x0a, 0x0b, 0x48,
+	0x6f, 0x73, 0x74, 0x65, 0x64, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x65, 0x76,
+	0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x65, 0x76,
+	0x65, 0x6e, 0x74, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x2c, 0x0a, 0x08, 0x6c,
+	0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10, 0x2e,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x4c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52,
+	0x08, 0x6c, 0x6f, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x2e, 0x0a, 0x04, 0x64, 0x61, 0x74,
+	0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x52, 0x04, 0x64, 0x61, 0x74, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
+	0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28, 0x0a, 0x10, 0x70,
+	0x72, 0x69, 0x63, 0x65, 0x5f, 0x70, 0x65, 0x72, 0x5f, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x70, 0x72, 0x69, 0x63, 0x65, 0x50, 0x65, 0x72, 0x54,
+	0x69, 0x63, 0x6b, 0x65, 0x74, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x73,
+	0x5f, 0x73, 0x6f, 0x6c, 0x64, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x74, 0x69, 0x63,
+	0x6b, 0x65, 0x74, 0x73, 0x53, 0x6f, 0x6c, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x74, 0x69, 0x63, 0x6b,
+	0x65, 0x74, 0x5f, 0x6c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b,
+	0x74, 0x69, 0x63, 0x6b, 0x65, 0x74, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x32, 0xa2, 0x08, 0x0a, 0x0d,
 	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x58, 0x0a,
 	0x13, 0x47, 0x65, 0x74, 0x4d, 0x61, 0x73, 0x74, 0x65, 0x72, 0x4f, 0x66, 0x43, 0x65, 0x72, 0x65,
 	0x6d, 0x6f, 0x6e, 0x79, 0x12, 0x1f, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x4d, 0x61,
@@ -2508,9 +2732,14 @@ var file_client_client_proto_rawDesc = []byte{
 	0x6e, 0x64, 0x6f, 0x72, 0x73, 0x42, 0x79, 0x43, 0x61, 0x74, 0x65, 0x67, 0x6f, 0x72, 0x79, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x24, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e,
 	0x47, 0x65, 0x74, 0x56, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x73, 0x42, 0x79, 0x43, 0x61, 0x74, 0x65,
-	0x67, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x11, 0x5a, 0x0f,
-	0x2e, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x3b, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x67, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x52, 0x0a, 0x0f,
+	0x47, 0x65, 0x74, 0x48, 0x6f, 0x73, 0x74, 0x65, 0x64, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x12,
+	0x1e, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x47, 0x65, 0x74, 0x48, 0x6f, 0x73, 0x74,
+	0x65, 0x64, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x1f, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x2e, 0x47, 0x65, 0x74, 0x48, 0x6f, 0x73, 0x74,
+	0x65, 0x64, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x42, 0x11, 0x5a, 0x0f, 0x2e, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x3b, 0x63, 0x6c, 0x69,
+	0x65, 0x6e, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2525,7 +2754,7 @@ func file_client_client_proto_rawDescGZIP() []byte {
 	return file_client_client_proto_rawDescData
 }
 
-var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
 var file_client_client_proto_goTypes = []interface{}{
 	(*MasterOfCeremonyRequest)(nil),      // 0: client.MasterOfCeremonyRequest
 	(*MasterOfCeremonyResponse)(nil),     // 1: client.MasterOfCeremonyResponse
@@ -2561,7 +2790,10 @@ var file_client_client_proto_goTypes = []interface{}{
 	(*GetVendorsByCategoryResponse)(nil), // 31: client.GetVendorsByCategoryResponse
 	(*VendorWithServices)(nil),           // 32: client.VendorWithServices
 	(*Service)(nil),                      // 33: client.Service
-	(*timestamppb.Timestamp)(nil),        // 34: google.protobuf.Timestamp
+	(*GetHostedEventsRequest)(nil),       // 34: client.GetHostedEventsRequest
+	(*GetHostedEventsResponse)(nil),      // 35: client.GetHostedEventsResponse
+	(*HostedEvent)(nil),                  // 36: client.HostedEvent
+	(*timestamppb.Timestamp)(nil),        // 37: google.protobuf.Timestamp
 }
 var file_client_client_proto_depIdxs = []int32{
 	9,  // 0: client.Event.location:type_name -> client.Location
@@ -2569,52 +2801,57 @@ var file_client_client_proto_depIdxs = []int32{
 	7,  // 2: client.LandingPageData.upcoming_events:type_name -> client.Event
 	8,  // 3: client.LandingPageData.featured_vendors:type_name -> client.Vendor
 	10, // 4: client.LandingPageResponse.data:type_name -> client.LandingPageData
-	34, // 5: client.CreateEventRequest.date:type_name -> google.protobuf.Timestamp
+	37, // 5: client.CreateEventRequest.date:type_name -> google.protobuf.Timestamp
 	9,  // 6: client.CreateEventRequest.location:type_name -> client.Location
 	14, // 7: client.CreateEventRequest.event_details:type_name -> client.EventDetails
-	34, // 8: client.EventDetails.start_time:type_name -> google.protobuf.Timestamp
-	34, // 9: client.EventDetails.end_time:type_name -> google.protobuf.Timestamp
-	34, // 10: client.EditEventRequest.date:type_name -> google.protobuf.Timestamp
+	37, // 8: client.EventDetails.start_time:type_name -> google.protobuf.Timestamp
+	37, // 9: client.EventDetails.end_time:type_name -> google.protobuf.Timestamp
+	37, // 10: client.EditEventRequest.date:type_name -> google.protobuf.Timestamp
 	9,  // 11: client.EditEventRequest.location:type_name -> client.Location
 	14, // 12: client.EditEventRequest.event_details:type_name -> client.EventDetails
-	34, // 13: client.GetClientProfileResponse.created_at:type_name -> google.protobuf.Timestamp
-	34, // 14: client.GetClientProfileResponse.updated_at:type_name -> google.protobuf.Timestamp
+	37, // 13: client.GetClientProfileResponse.created_at:type_name -> google.protobuf.Timestamp
+	37, // 14: client.GetClientProfileResponse.updated_at:type_name -> google.protobuf.Timestamp
 	26, // 15: client.GetBookingsResponse.bookings:type_name -> client.Booking
 	27, // 16: client.Booking.client:type_name -> client.Client
 	8,  // 17: client.Booking.vendor:type_name -> client.Vendor
-	34, // 18: client.Booking.date:type_name -> google.protobuf.Timestamp
-	34, // 19: client.BookVendorRequest.date:type_name -> google.protobuf.Timestamp
+	37, // 18: client.Booking.date:type_name -> google.protobuf.Timestamp
+	37, // 19: client.BookVendorRequest.date:type_name -> google.protobuf.Timestamp
 	32, // 20: client.GetVendorsByCategoryResponse.vendors:type_name -> client.VendorWithServices
 	33, // 21: client.VendorWithServices.services:type_name -> client.Service
-	0,  // 22: client.ClientService.GetMasterOfCeremony:input_type -> client.MasterOfCeremonyRequest
-	2,  // 23: client.ClientService.HandleStripeEvent:input_type -> client.StripeWebhookRequest
-	4,  // 24: client.ClientService.VerifyPayment:input_type -> client.VerifyPaymentRequest
-	11, // 25: client.ClientService.ClientDashboard:input_type -> client.LandingPageRequest
-	13, // 26: client.ClientService.CreateEvent:input_type -> client.CreateEventRequest
-	16, // 27: client.ClientService.EditEvent:input_type -> client.EditEventRequest
-	18, // 28: client.ClientService.GetClientProfile:input_type -> client.GetClientProfileRequest
-	20, // 29: client.ClientService.EditClientProfile:input_type -> client.EditClientProfileRequest
-	22, // 30: client.ClientService.ResetPassword:input_type -> client.ResetPasswordRequest
-	24, // 31: client.ClientService.GetBookings:input_type -> client.GetBookingsRequest
-	28, // 32: client.ClientService.BookVendor:input_type -> client.BookVendorRequest
-	30, // 33: client.ClientService.GetVendorsByCategory:input_type -> client.GetVendorsByCategoryRequest
-	1,  // 34: client.ClientService.GetMasterOfCeremony:output_type -> client.MasterOfCeremonyResponse
-	3,  // 35: client.ClientService.HandleStripeEvent:output_type -> client.StripeWebhookResponse
-	5,  // 36: client.ClientService.VerifyPayment:output_type -> client.VerifyPaymentResponse
-	12, // 37: client.ClientService.ClientDashboard:output_type -> client.LandingPageResponse
-	15, // 38: client.ClientService.CreateEvent:output_type -> client.CreateEventResponse
-	17, // 39: client.ClientService.EditEvent:output_type -> client.EditEventResponse
-	19, // 40: client.ClientService.GetClientProfile:output_type -> client.GetClientProfileResponse
-	21, // 41: client.ClientService.EditClientProfile:output_type -> client.EditClientProfileResponse
-	23, // 42: client.ClientService.ResetPassword:output_type -> client.ResetPasswordResponse
-	25, // 43: client.ClientService.GetBookings:output_type -> client.GetBookingsResponse
-	29, // 44: client.ClientService.BookVendor:output_type -> client.BookVendorResponse
-	31, // 45: client.ClientService.GetVendorsByCategory:output_type -> client.GetVendorsByCategoryResponse
-	34, // [34:46] is the sub-list for method output_type
-	22, // [22:34] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	36, // 22: client.GetHostedEventsResponse.events:type_name -> client.HostedEvent
+	9,  // 23: client.HostedEvent.location:type_name -> client.Location
+	37, // 24: client.HostedEvent.date:type_name -> google.protobuf.Timestamp
+	0,  // 25: client.ClientService.GetMasterOfCeremony:input_type -> client.MasterOfCeremonyRequest
+	2,  // 26: client.ClientService.HandleStripeEvent:input_type -> client.StripeWebhookRequest
+	4,  // 27: client.ClientService.VerifyPayment:input_type -> client.VerifyPaymentRequest
+	11, // 28: client.ClientService.ClientDashboard:input_type -> client.LandingPageRequest
+	13, // 29: client.ClientService.CreateEvent:input_type -> client.CreateEventRequest
+	16, // 30: client.ClientService.EditEvent:input_type -> client.EditEventRequest
+	18, // 31: client.ClientService.GetClientProfile:input_type -> client.GetClientProfileRequest
+	20, // 32: client.ClientService.EditClientProfile:input_type -> client.EditClientProfileRequest
+	22, // 33: client.ClientService.ResetPassword:input_type -> client.ResetPasswordRequest
+	24, // 34: client.ClientService.GetBookings:input_type -> client.GetBookingsRequest
+	28, // 35: client.ClientService.BookVendor:input_type -> client.BookVendorRequest
+	30, // 36: client.ClientService.GetVendorsByCategory:input_type -> client.GetVendorsByCategoryRequest
+	34, // 37: client.ClientService.GetHostedEvents:input_type -> client.GetHostedEventsRequest
+	1,  // 38: client.ClientService.GetMasterOfCeremony:output_type -> client.MasterOfCeremonyResponse
+	3,  // 39: client.ClientService.HandleStripeEvent:output_type -> client.StripeWebhookResponse
+	5,  // 40: client.ClientService.VerifyPayment:output_type -> client.VerifyPaymentResponse
+	12, // 41: client.ClientService.ClientDashboard:output_type -> client.LandingPageResponse
+	15, // 42: client.ClientService.CreateEvent:output_type -> client.CreateEventResponse
+	17, // 43: client.ClientService.EditEvent:output_type -> client.EditEventResponse
+	19, // 44: client.ClientService.GetClientProfile:output_type -> client.GetClientProfileResponse
+	21, // 45: client.ClientService.EditClientProfile:output_type -> client.EditClientProfileResponse
+	23, // 46: client.ClientService.ResetPassword:output_type -> client.ResetPasswordResponse
+	25, // 47: client.ClientService.GetBookings:output_type -> client.GetBookingsResponse
+	29, // 48: client.ClientService.BookVendor:output_type -> client.BookVendorResponse
+	31, // 49: client.ClientService.GetVendorsByCategory:output_type -> client.GetVendorsByCategoryResponse
+	35, // 50: client.ClientService.GetHostedEvents:output_type -> client.GetHostedEventsResponse
+	38, // [38:51] is the sub-list for method output_type
+	25, // [25:38] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_client_client_proto_init() }
@@ -3031,6 +3268,42 @@ func file_client_client_proto_init() {
 				return nil
 			}
 		}
+		file_client_client_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetHostedEventsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetHostedEventsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*HostedEvent); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3038,7 +3311,7 @@ func file_client_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_client_client_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   34,
+			NumMessages:   37,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
