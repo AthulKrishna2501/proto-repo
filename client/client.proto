@@ -18,6 +18,8 @@ service ClientService {
   rpc ResetPassword (ResetPasswordRequest) returns (ResetPasswordResponse);
   rpc GetBookings (GetBookingsRequest) returns (GetBookingsResponse);
   rpc BookVendor (BookVendorRequest) returns (BookVendorResponse);
+  rpc GetClientBookings (GetClientBookingsRequest) returns (GetClientBookingsResponse);
+
 
 }
 
@@ -200,4 +202,12 @@ message BookVendorRequest {
 
 message BookVendorResponse {
   string message = 1; 
+}
+
+message GetClientBookingsRequest {
+  string client_id = 1; 
+}
+
+message GetClientBookingsResponse {
+  repeated Booking bookings = 1; 
 }
