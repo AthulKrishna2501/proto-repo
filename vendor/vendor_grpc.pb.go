@@ -30,6 +30,7 @@ type VendorSeviceClient interface {
 	GetVendorDashboard(ctx context.Context, in *GetVendorDashboardRequest, opts ...grpc.CallOption) (*GetVendorDashboardResponse, error)
 	GetVendorServices(ctx context.Context, in *GetVendorServicesRequest, opts ...grpc.CallOption) (*GetVendorServicesResponse, error)
 	GetBookingRequests(ctx context.Context, in *GetBookingRequestsRequest, opts ...grpc.CallOption) (*GetBookingRequestsResponse, error)
+	ApproveBooking(ctx context.Context, in *ApproveBookingRequest, opts ...grpc.CallOption) (*ApproveBookingResponse, error)
 }
 
 type vendorSeviceClient struct {
@@ -148,6 +149,15 @@ func (c *vendorSeviceClient) GetBookingRequests(ctx context.Context, in *GetBook
 	return out, nil
 }
 
+func (c *vendorSeviceClient) ApproveBooking(ctx context.Context, in *ApproveBookingRequest, opts ...grpc.CallOption) (*ApproveBookingResponse, error) {
+	out := new(ApproveBookingResponse)
+	err := c.cc.Invoke(ctx, "/vendor.VendorSevice/ApproveBooking", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorSeviceServer is the server API for VendorSevice service.
 // All implementations must embed UnimplementedVendorSeviceServer
 // for forward compatibility
@@ -164,6 +174,7 @@ type VendorSeviceServer interface {
 	GetVendorDashboard(context.Context, *GetVendorDashboardRequest) (*GetVendorDashboardResponse, error)
 	GetVendorServices(context.Context, *GetVendorServicesRequest) (*GetVendorServicesResponse, error)
 	GetBookingRequests(context.Context, *GetBookingRequestsRequest) (*GetBookingRequestsResponse, error)
+	ApproveBooking(context.Context, *ApproveBookingRequest) (*ApproveBookingResponse, error)
 	mustEmbedUnimplementedVendorSeviceServer()
 }
 
@@ -206,6 +217,9 @@ func (UnimplementedVendorSeviceServer) GetVendorServices(context.Context, *GetVe
 }
 func (UnimplementedVendorSeviceServer) GetBookingRequests(context.Context, *GetBookingRequestsRequest) (*GetBookingRequestsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBookingRequests not implemented")
+}
+func (UnimplementedVendorSeviceServer) ApproveBooking(context.Context, *ApproveBookingRequest) (*ApproveBookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApproveBooking not implemented")
 }
 func (UnimplementedVendorSeviceServer) mustEmbedUnimplementedVendorSeviceServer() {}
 
@@ -436,6 +450,24 @@ func _VendorSevice_GetBookingRequests_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorSevice_ApproveBooking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApproveBookingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).ApproveBooking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/vendor.VendorSevice/ApproveBooking",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).ApproveBooking(ctx, req.(*ApproveBookingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorSevice_ServiceDesc is the grpc.ServiceDesc for VendorSevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -490,6 +522,10 @@ var VendorSevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBookingRequests",
 			Handler:    _VendorSevice_GetBookingRequests_Handler,
+		},
+		{
+			MethodName: "ApproveBooking",
+			Handler:    _VendorSevice_ApproveBooking_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

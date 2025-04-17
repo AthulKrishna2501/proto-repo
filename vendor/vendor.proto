@@ -19,7 +19,7 @@ service VendorSevice {
   rpc GetVendorDashboard(GetVendorDashboardRequest) returns (GetVendorDashboardResponse);
   rpc GetVendorServices(GetVendorServicesRequest) returns (GetVendorServicesResponse);
   rpc GetBookingRequests (GetBookingRequestsRequest) returns (GetBookingRequestsResponse);
-
+  rpc ApproveBooking (ApproveBookingRequest) returns (ApproveBookingResponse);
 
 }
 
@@ -191,4 +191,12 @@ message BookingRequest {
   google.protobuf.Timestamp date = 4;
   int32 price = 5;
   string status = 6; 
+}
+
+message ApproveBookingRequest {
+  string booking_id = 1;
+}
+
+message ApproveBookingResponse {
+  string message = 1;
 }
