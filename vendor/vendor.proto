@@ -195,6 +195,7 @@ message BookingRequest {
 
 message ApproveBookingRequest {
   string booking_id = 1;
+  string vendor_id = 2;
 }
 
 message ApproveBookingResponse {
