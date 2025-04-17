@@ -3,6 +3,9 @@ syntax = "proto3";
 
 package admin;
 
+import "google/protobuf/timestamp.proto";
+
+
 option go_package = "./admin;admin";
 
 service AdminService {
@@ -15,6 +18,8 @@ service AdminService {
   rpc ListCategory(ListCategoryRequest) returns (ListCategoryResponse);
   rpc ViewAdminWallet(ViewAdminWalletRequest) returns (ViewAdminWalletResponse);
   rpc AdminDashBoard(AdminDashBoardRequest) returns (AdminDashBoardResponse);
+  rpc GetAllBookings (GetAllBookingsRequest) returns (GetAllBookingsResponse);
+
 
 }
 
@@ -97,4 +102,30 @@ message Category {
   string category_name = 2;
   string title = 3;
   string image = 4;
+}
+
+message GetAllBookingsRequest {}
+
+message GetAllBookingsResponse {
+  repeated Booking bookings = 1; 
+}
+
+message Booking {
+  string booking_id = 1;
+  Client client = 2;
+  Vendor vendor = 3;
+  string service = 4;
+  google.protobuf.Timestamp date = 5;
+  int32 price = 6;
+  string status = 7; 
+}
+
+message Client {
+  string first_name = 1;
+  string last_name = 2;
+}
+
+message Vendor {
+  string first_name = 1;
+  string last_name = 2;
 }
