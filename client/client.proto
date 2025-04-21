@@ -33,6 +33,7 @@ message MasterOfCeremonyRequest {
 
 message MasterOfCeremonyResponse {
   string url = 1;
+  string message = 2;
 }
 
 message StripeWebhookRequest {
