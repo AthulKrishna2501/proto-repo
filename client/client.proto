@@ -247,8 +247,9 @@ message HostedEvent {
   google.protobuf.Timestamp date = 4;
   string description = 5;
   int32 price_per_ticket = 6;
-  int32 tickets_sold = 7;
-  int32 ticket_limit = 8;
+  int32 ticket_limit = 7;
+  string start_time = 8;
+  string end_time = 9;
 }
 
 message GetUpcomingEventsRequest {}
