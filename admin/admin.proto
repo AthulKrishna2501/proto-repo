@@ -144,7 +144,7 @@ message GetAdminTransactionResponse{
 
 message AdminWalletTransaction{
   string transaction_id = 1;
-  google.protobuf.Timestamp date = 2;
+  string date = 2;
   string type = 3;
   float amount = 4;
   string status = 5;
