@@ -254,7 +254,8 @@ message HostedEvent {
 message GetUpcomingEventsRequest {}
 
 message GetUpcomingEventsResponse {
-  repeated UpcomingEvent events = 1; 
+  string message = 1;
+  repeated UpcomingEvent events = 2; 
 }
 
 message UpcomingEvent {
