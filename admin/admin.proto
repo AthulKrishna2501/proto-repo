@@ -139,6 +139,10 @@ message GetAdminTransactionRequest{
 }
 
 message GetAdminTransactionResponse{
+  repeated  AdminWalletTransaction wallet_transactions = 1;
+}
+
+message AdminWalletTransaction{
   string transaction_id = 1;
   google.protobuf.Timestamp date = 2;
   string type = 3;
