@@ -81,6 +81,9 @@ message ViewAdminWalletRequest {
 
 message ViewAdminWalletResponse {
   float balance = 1;
+  float total_deposits = 2;
+  float total_withdrawals = 3;
+  
 }
 message AdminDashBoardRequest {}
 
