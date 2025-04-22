@@ -19,6 +19,7 @@ service AdminService {
   rpc ViewAdminWallet(ViewAdminWalletRequest) returns (ViewAdminWalletResponse);
   rpc AdminDashBoard(AdminDashBoardRequest) returns (AdminDashBoardResponse);
   rpc GetAllBookings (GetAllBookingsRequest) returns (GetAllBookingsResponse);
+  rpc ViewAdminTransactions(GetAdminTransactionRequest) returns (GetAdminTransactionResponse);
 
 
 }
@@ -131,4 +132,16 @@ message Client {
 message Vendor {
   string first_name = 1;
   string last_name = 2;
+}
+
+message GetAdminTransactionRequest{
+  string email = 1;
+}
+
+message GetAdminTransactionResponse{
+  string transaction_id = 1;
+  google.protobuf.Timestamp date = 2;
+  string type = 3;
+  float amount = 4;
+  string status = 5;
 }
