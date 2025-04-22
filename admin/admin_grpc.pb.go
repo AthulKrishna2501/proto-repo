@@ -28,7 +28,7 @@ type AdminServiceClient interface {
 	ViewAdminWallet(ctx context.Context, in *ViewAdminWalletRequest, opts ...grpc.CallOption) (*ViewAdminWalletResponse, error)
 	AdminDashBoard(ctx context.Context, in *AdminDashBoardRequest, opts ...grpc.CallOption) (*AdminDashBoardResponse, error)
 	GetAllBookings(ctx context.Context, in *GetAllBookingsRequest, opts ...grpc.CallOption) (*GetAllBookingsResponse, error)
-	GetAdminTransactions(ctx context.Context, in *GetAdminTransactionRequest, opts ...grpc.CallOption) (*GetAdminTransactionResponse, error)
+	GetAdminWalletTransactions(ctx context.Context, in *GetAdminTransactionRequest, opts ...grpc.CallOption) (*GetAdminTransactionResponse, error)
 }
 
 type adminServiceClient struct {
@@ -129,9 +129,9 @@ func (c *adminServiceClient) GetAllBookings(ctx context.Context, in *GetAllBooki
 	return out, nil
 }
 
-func (c *adminServiceClient) GetAdminTransactions(ctx context.Context, in *GetAdminTransactionRequest, opts ...grpc.CallOption) (*GetAdminTransactionResponse, error) {
+func (c *adminServiceClient) GetAdminWalletTransactions(ctx context.Context, in *GetAdminTransactionRequest, opts ...grpc.CallOption) (*GetAdminTransactionResponse, error) {
 	out := new(GetAdminTransactionResponse)
-	err := c.cc.Invoke(ctx, "/admin.AdminService/GetAdminTransactions", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.AdminService/GetAdminWalletTransactions", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ type AdminServiceServer interface {
 	ViewAdminWallet(context.Context, *ViewAdminWalletRequest) (*ViewAdminWalletResponse, error)
 	AdminDashBoard(context.Context, *AdminDashBoardRequest) (*AdminDashBoardResponse, error)
 	GetAllBookings(context.Context, *GetAllBookingsRequest) (*GetAllBookingsResponse, error)
-	GetAdminTransactions(context.Context, *GetAdminTransactionRequest) (*GetAdminTransactionResponse, error)
+	GetAdminWalletTransactions(context.Context, *GetAdminTransactionRequest) (*GetAdminTransactionResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -190,8 +190,8 @@ func (UnimplementedAdminServiceServer) AdminDashBoard(context.Context, *AdminDas
 func (UnimplementedAdminServiceServer) GetAllBookings(context.Context, *GetAllBookingsRequest) (*GetAllBookingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllBookings not implemented")
 }
-func (UnimplementedAdminServiceServer) GetAdminTransactions(context.Context, *GetAdminTransactionRequest) (*GetAdminTransactionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAdminTransactions not implemented")
+func (UnimplementedAdminServiceServer) GetAdminWalletTransactions(context.Context, *GetAdminTransactionRequest) (*GetAdminTransactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAdminWalletTransactions not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 
@@ -386,20 +386,20 @@ func _AdminService_GetAllBookings_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AdminService_GetAdminTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AdminService_GetAdminWalletTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAdminTransactionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AdminServiceServer).GetAdminTransactions(ctx, in)
+		return srv.(AdminServiceServer).GetAdminWalletTransactions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/admin.AdminService/GetAdminTransactions",
+		FullMethod: "/admin.AdminService/GetAdminWalletTransactions",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AdminServiceServer).GetAdminTransactions(ctx, req.(*GetAdminTransactionRequest))
+		return srv.(AdminServiceServer).GetAdminWalletTransactions(ctx, req.(*GetAdminTransactionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -452,8 +452,8 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AdminService_GetAllBookings_Handler,
 		},
 		{
-			MethodName: "GetAdminTransactions",
-			Handler:    _AdminService_GetAdminTransactions_Handler,
+			MethodName: "GetAdminWalletTransactions",
+			Handler:    _AdminService_GetAdminWalletTransactions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

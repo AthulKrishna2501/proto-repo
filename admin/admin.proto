@@ -19,7 +19,7 @@ service AdminService {
   rpc ViewAdminWallet(ViewAdminWalletRequest) returns (ViewAdminWalletResponse);
   rpc AdminDashBoard(AdminDashBoardRequest) returns (AdminDashBoardResponse);
   rpc GetAllBookings (GetAllBookingsRequest) returns (GetAllBookingsResponse);
-  rpc GetAdminTransactions(GetAdminTransactionRequest) returns (GetAdminTransactionResponse);
+  rpc GetAdminWalletTransactions(GetAdminTransactionRequest) returns (GetAdminTransactionResponse);
 
 
 }
