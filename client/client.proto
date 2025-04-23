@@ -267,8 +267,10 @@ message UpcomingEvent {
   string description = 5;
   string poster_image = 6;
   int32 price_per_ticket = 7;
-  int32 tickets_sold = 8;
   int32 ticket_limit = 9;
+  google.protobuf.Timestamp start_time = 10;
+  google.protobuf.Timestamp end_time = 11;
+
 }
 
 message GetVendorProfileRequest {
