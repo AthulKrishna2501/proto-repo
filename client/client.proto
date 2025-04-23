@@ -22,6 +22,7 @@ service ClientService {
   rpc GetHostedEvents (GetHostedEventsRequest) returns (GetHostedEventsResponse);
   rpc GetUpcomingEvents (GetUpcomingEventsRequest) returns (GetUpcomingEventsResponse);
   rpc GetVendorProfile (GetVendorProfileRequest) returns (GetVendorProfileResponse);
+  rpc AddReviewRatings (AddReviewRatingsRequest) returns (AddReviewRatingsResponse);
 
 
 }
@@ -294,4 +295,15 @@ message VendorDetails {
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
   repeated Service services = 12;
+}
+
+message AddReviewRatingsRequest{
+  string client_id = 1;
+  string vendor_id = 2;
+  int64 rating = 3;
+  string review = 4;
+}
+
+message AddReviewRatingsResponse{
+  string message = 1;
 }

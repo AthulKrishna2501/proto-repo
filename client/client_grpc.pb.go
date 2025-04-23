@@ -33,6 +33,7 @@ type ClientServiceClient interface {
 	GetHostedEvents(ctx context.Context, in *GetHostedEventsRequest, opts ...grpc.CallOption) (*GetHostedEventsResponse, error)
 	GetUpcomingEvents(ctx context.Context, in *GetUpcomingEventsRequest, opts ...grpc.CallOption) (*GetUpcomingEventsResponse, error)
 	GetVendorProfile(ctx context.Context, in *GetVendorProfileRequest, opts ...grpc.CallOption) (*GetVendorProfileResponse, error)
+	AddReviewRatings(ctx context.Context, in *AddReviewRatingsRequest, opts ...grpc.CallOption) (*AddReviewRatingsResponse, error)
 }
 
 type clientServiceClient struct {
@@ -178,6 +179,15 @@ func (c *clientServiceClient) GetVendorProfile(ctx context.Context, in *GetVendo
 	return out, nil
 }
 
+func (c *clientServiceClient) AddReviewRatings(ctx context.Context, in *AddReviewRatingsRequest, opts ...grpc.CallOption) (*AddReviewRatingsResponse, error) {
+	out := new(AddReviewRatingsResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/AddReviewRatings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -197,6 +207,7 @@ type ClientServiceServer interface {
 	GetHostedEvents(context.Context, *GetHostedEventsRequest) (*GetHostedEventsResponse, error)
 	GetUpcomingEvents(context.Context, *GetUpcomingEventsRequest) (*GetUpcomingEventsResponse, error)
 	GetVendorProfile(context.Context, *GetVendorProfileRequest) (*GetVendorProfileResponse, error)
+	AddReviewRatings(context.Context, *AddReviewRatingsRequest) (*AddReviewRatingsResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -248,6 +259,9 @@ func (UnimplementedClientServiceServer) GetUpcomingEvents(context.Context, *GetU
 }
 func (UnimplementedClientServiceServer) GetVendorProfile(context.Context, *GetVendorProfileRequest) (*GetVendorProfileResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVendorProfile not implemented")
+}
+func (UnimplementedClientServiceServer) AddReviewRatings(context.Context, *AddReviewRatingsRequest) (*AddReviewRatingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddReviewRatings not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -532,6 +546,24 @@ func _ClientService_GetVendorProfile_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_AddReviewRatings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddReviewRatingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).AddReviewRatings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/client.ClientService/AddReviewRatings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).AddReviewRatings(ctx, req.(*AddReviewRatingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -598,6 +630,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetVendorProfile",
 			Handler:    _ClientService_GetVendorProfile_Handler,
+		},
+		{
+			MethodName: "AddReviewRatings",
+			Handler:    _ClientService_AddReviewRatings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
