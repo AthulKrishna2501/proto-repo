@@ -300,7 +300,7 @@ message VendorDetails {
 message AddReviewRatingsRequest{
   string client_id = 1;
   string vendor_id = 2;
-  int64 rating = 3;
+  float rating = 3;
   string review = 4;
 }
 
