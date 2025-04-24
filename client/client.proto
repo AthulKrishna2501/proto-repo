@@ -23,6 +23,7 @@ service ClientService {
   rpc GetUpcomingEvents (GetUpcomingEventsRequest) returns (GetUpcomingEventsResponse);
   rpc GetVendorProfile (GetVendorProfileRequest) returns (GetVendorProfileResponse);
   rpc AddReviewRatings (AddReviewRatingsRequest) returns (AddReviewRatingsResponse);
+  rpc EditReviewRatings(EditReviewRatingsRequest) returns (EditReviewRatingsResponse);
 
 
 }
@@ -305,5 +306,16 @@ message AddReviewRatingsRequest{
 }
 
 message AddReviewRatingsResponse{
+  string message = 1;
+}
+
+
+message EditReviewRatingsRequest{
+  string review_id = 1;
+  float rating = 2;
+  string review = 3;
+}
+
+message EditReviewRatingsResponse{
   string message = 1;
 }
