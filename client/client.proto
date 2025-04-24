@@ -25,7 +25,8 @@ service ClientService {
   rpc AddReviewRatings (AddReviewRatingsRequest) returns (AddReviewRatingsResponse);
   rpc EditReviewRatings(EditReviewRatingsRequest) returns (EditReviewRatingsResponse);
   rpc ViewClientReviewRatings(ViewClientReviewRatingsRequest) returns (ViewClientReviewRatingsResponse);
-
+  rpc DeleteReviewRatings(DeleteReviewRequest) returns (DeleteReviewResponse); 
+ 
 
 }
 
@@ -338,3 +339,11 @@ message ViewClientReviewRatingsResponse{
   repeated ReviewDetails review =1;
 }
 
+
+message DeleteReviewRequest{
+  string review_id = 1;
+}
+
+message DeleteReviewResponse{
+  string message = 1;
+}
