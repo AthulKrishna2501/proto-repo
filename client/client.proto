@@ -325,10 +325,16 @@ message ViewClientReviewRatingsRequest{
   string client_id = 1;
 }
 
-message ViewClientReviewRatingsResponse{
+
+message ReviewDetails{
   string review_id = 1;
   string vendor_id = 2;
   string vendor_name = 3;
   float rating = 4;
   string review = 5;
 }
+
+message ViewClientReviewRatingsResponse{
+  repeated ReviewDetails review =1;
+}
+

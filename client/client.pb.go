@@ -3107,7 +3107,7 @@ func (x *ViewClientReviewRatingsRequest) GetClientId() string {
 	return ""
 }
 
-type ViewClientReviewRatingsResponse struct {
+type ReviewDetails struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -3119,10 +3119,85 @@ type ViewClientReviewRatingsResponse struct {
 	Review     string  `protobuf:"bytes,5,opt,name=review,proto3" json:"review,omitempty"`
 }
 
+func (x *ReviewDetails) Reset() {
+	*x = ReviewDetails{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_client_client_proto_msgTypes[48]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ReviewDetails) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReviewDetails) ProtoMessage() {}
+
+func (x *ReviewDetails) ProtoReflect() protoreflect.Message {
+	mi := &file_client_client_proto_msgTypes[48]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReviewDetails.ProtoReflect.Descriptor instead.
+func (*ReviewDetails) Descriptor() ([]byte, []int) {
+	return file_client_client_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *ReviewDetails) GetReviewId() string {
+	if x != nil {
+		return x.ReviewId
+	}
+	return ""
+}
+
+func (x *ReviewDetails) GetVendorId() string {
+	if x != nil {
+		return x.VendorId
+	}
+	return ""
+}
+
+func (x *ReviewDetails) GetVendorName() string {
+	if x != nil {
+		return x.VendorName
+	}
+	return ""
+}
+
+func (x *ReviewDetails) GetRating() float32 {
+	if x != nil {
+		return x.Rating
+	}
+	return 0
+}
+
+func (x *ReviewDetails) GetReview() string {
+	if x != nil {
+		return x.Review
+	}
+	return ""
+}
+
+type ViewClientReviewRatingsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Review []*ReviewDetails `protobuf:"bytes,1,rep,name=review,proto3" json:"review,omitempty"`
+}
+
 func (x *ViewClientReviewRatingsResponse) Reset() {
 	*x = ViewClientReviewRatingsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_client_client_proto_msgTypes[48]
+		mi := &file_client_client_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3135,7 +3210,7 @@ func (x *ViewClientReviewRatingsResponse) String() string {
 func (*ViewClientReviewRatingsResponse) ProtoMessage() {}
 
 func (x *ViewClientReviewRatingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_client_client_proto_msgTypes[48]
+	mi := &file_client_client_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3148,42 +3223,14 @@ func (x *ViewClientReviewRatingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ViewClientReviewRatingsResponse.ProtoReflect.Descriptor instead.
 func (*ViewClientReviewRatingsResponse) Descriptor() ([]byte, []int) {
-	return file_client_client_proto_rawDescGZIP(), []int{48}
+	return file_client_client_proto_rawDescGZIP(), []int{49}
 }
 
-func (x *ViewClientReviewRatingsResponse) GetReviewId() string {
-	if x != nil {
-		return x.ReviewId
-	}
-	return ""
-}
-
-func (x *ViewClientReviewRatingsResponse) GetVendorId() string {
-	if x != nil {
-		return x.VendorId
-	}
-	return ""
-}
-
-func (x *ViewClientReviewRatingsResponse) GetVendorName() string {
-	if x != nil {
-		return x.VendorName
-	}
-	return ""
-}
-
-func (x *ViewClientReviewRatingsResponse) GetRating() float32 {
-	if x != nil {
-		return x.Rating
-	}
-	return 0
-}
-
-func (x *ViewClientReviewRatingsResponse) GetReview() string {
+func (x *ViewClientReviewRatingsResponse) GetReview() []*ReviewDetails {
 	if x != nil {
 		return x.Review
 	}
-	return ""
+	return nil
 }
 
 var File_client_client_proto protoreflect.FileDescriptor
@@ -3583,17 +3630,21 @@ var file_client_client_proto_rawDesc = []byte{
 	0x77, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x76, 0x69, 0x65, 0x77, 0x52, 0x61, 0x74,
 	0x69, 0x6e, 0x67, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x63,
 	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
-	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0xac, 0x01, 0x0a, 0x1f, 0x56, 0x69, 0x65,
-	0x77, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x76, 0x69, 0x65, 0x77, 0x52, 0x61, 0x74,
-	0x69, 0x6e, 0x67, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1b, 0x0a, 0x09,
-	0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x08, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x76, 0x65, 0x6e,
-	0x64, 0x6f, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x76, 0x65,
-	0x6e, 0x64, 0x6f, 0x72, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72,
-	0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x76, 0x65, 0x6e,
-	0x64, 0x6f, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x61, 0x74, 0x69, 0x6e,
-	0x67, 0x18, 0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x12,
-	0x16, 0x0a, 0x06, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x9a, 0x01, 0x0a, 0x0d, 0x52, 0x65, 0x76,
+	0x69, 0x65, 0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x72, 0x65,
+	0x76, 0x69, 0x65, 0x77, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x72,
+	0x65, 0x76, 0x69, 0x65, 0x77, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09, 0x76, 0x65, 0x6e, 0x64, 0x6f,
+	0x72, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x76, 0x65, 0x6e, 0x64,
+	0x6f, 0x72, 0x49, 0x64, 0x12, 0x1f, 0x0a, 0x0b, 0x76, 0x65, 0x6e, 0x64, 0x6f, 0x72, 0x5f, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x76, 0x65, 0x6e, 0x64, 0x6f,
+	0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x02, 0x52, 0x06, 0x72, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x12, 0x16, 0x0a,
+	0x06, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72,
+	0x65, 0x76, 0x69, 0x65, 0x77, 0x22, 0x50, 0x0a, 0x1f, 0x56, 0x69, 0x65, 0x77, 0x43, 0x6c, 0x69,
+	0x65, 0x6e, 0x74, 0x52, 0x65, 0x76, 0x69, 0x65, 0x77, 0x52, 0x61, 0x74, 0x69, 0x6e, 0x67, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2d, 0x0a, 0x06, 0x72, 0x65, 0x76, 0x69,
+	0x65, 0x77, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e,
+	0x74, 0x2e, 0x52, 0x65, 0x76, 0x69, 0x65, 0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x52,
 	0x06, 0x72, 0x65, 0x76, 0x69, 0x65, 0x77, 0x32, 0xf0, 0x0b, 0x0a, 0x0d, 0x43, 0x6c, 0x69, 0x65,
 	0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x58, 0x0a, 0x13, 0x47, 0x65, 0x74,
 	0x4d, 0x61, 0x73, 0x74, 0x65, 0x72, 0x4f, 0x66, 0x43, 0x65, 0x72, 0x65, 0x6d, 0x6f, 0x6e, 0x79,
@@ -3706,7 +3757,7 @@ func file_client_client_proto_rawDescGZIP() []byte {
 	return file_client_client_proto_rawDescData
 }
 
-var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 49)
+var file_client_client_proto_msgTypes = make([]protoimpl.MessageInfo, 50)
 var file_client_client_proto_goTypes = []interface{}{
 	(*MasterOfCeremonyRequest)(nil),         // 0: client.MasterOfCeremonyRequest
 	(*MasterOfCeremonyResponse)(nil),        // 1: client.MasterOfCeremonyResponse
@@ -3756,8 +3807,9 @@ var file_client_client_proto_goTypes = []interface{}{
 	(*EditReviewRatingsRequest)(nil),        // 45: client.EditReviewRatingsRequest
 	(*EditReviewRatingsResponse)(nil),       // 46: client.EditReviewRatingsResponse
 	(*ViewClientReviewRatingsRequest)(nil),  // 47: client.ViewClientReviewRatingsRequest
-	(*ViewClientReviewRatingsResponse)(nil), // 48: client.ViewClientReviewRatingsResponse
-	(*timestamppb.Timestamp)(nil),           // 49: google.protobuf.Timestamp
+	(*ReviewDetails)(nil),                   // 48: client.ReviewDetails
+	(*ViewClientReviewRatingsResponse)(nil), // 49: client.ViewClientReviewRatingsResponse
+	(*timestamppb.Timestamp)(nil),           // 50: google.protobuf.Timestamp
 }
 var file_client_client_proto_depIdxs = []int32{
 	9,  // 0: client.Event.location:type_name -> client.Location
@@ -3765,77 +3817,78 @@ var file_client_client_proto_depIdxs = []int32{
 	7,  // 2: client.LandingPageData.upcoming_events:type_name -> client.Event
 	8,  // 3: client.LandingPageData.featured_vendors:type_name -> client.Vendor
 	10, // 4: client.LandingPageResponse.data:type_name -> client.LandingPageData
-	49, // 5: client.CreateEventRequest.date:type_name -> google.protobuf.Timestamp
+	50, // 5: client.CreateEventRequest.date:type_name -> google.protobuf.Timestamp
 	9,  // 6: client.CreateEventRequest.location:type_name -> client.Location
 	14, // 7: client.CreateEventRequest.event_details:type_name -> client.EventDetails
-	49, // 8: client.EventDetails.start_time:type_name -> google.protobuf.Timestamp
-	49, // 9: client.EventDetails.end_time:type_name -> google.protobuf.Timestamp
-	49, // 10: client.EditEventRequest.date:type_name -> google.protobuf.Timestamp
+	50, // 8: client.EventDetails.start_time:type_name -> google.protobuf.Timestamp
+	50, // 9: client.EventDetails.end_time:type_name -> google.protobuf.Timestamp
+	50, // 10: client.EditEventRequest.date:type_name -> google.protobuf.Timestamp
 	9,  // 11: client.EditEventRequest.location:type_name -> client.Location
 	14, // 12: client.EditEventRequest.event_details:type_name -> client.EventDetails
-	49, // 13: client.GetClientProfileResponse.created_at:type_name -> google.protobuf.Timestamp
-	49, // 14: client.GetClientProfileResponse.updated_at:type_name -> google.protobuf.Timestamp
+	50, // 13: client.GetClientProfileResponse.created_at:type_name -> google.protobuf.Timestamp
+	50, // 14: client.GetClientProfileResponse.updated_at:type_name -> google.protobuf.Timestamp
 	26, // 15: client.GetBookingsResponse.bookings:type_name -> client.Booking
 	27, // 16: client.Booking.client:type_name -> client.Client
 	8,  // 17: client.Booking.vendor:type_name -> client.Vendor
-	49, // 18: client.Booking.date:type_name -> google.protobuf.Timestamp
-	49, // 19: client.BookVendorRequest.date:type_name -> google.protobuf.Timestamp
+	50, // 18: client.Booking.date:type_name -> google.protobuf.Timestamp
+	50, // 19: client.BookVendorRequest.date:type_name -> google.protobuf.Timestamp
 	32, // 20: client.GetVendorsByCategoryResponse.vendors:type_name -> client.VendorWithServices
 	33, // 21: client.VendorWithServices.services:type_name -> client.Service
 	36, // 22: client.GetHostedEventsResponse.events:type_name -> client.HostedEvent
 	9,  // 23: client.HostedEvent.location:type_name -> client.Location
-	49, // 24: client.HostedEvent.date:type_name -> google.protobuf.Timestamp
+	50, // 24: client.HostedEvent.date:type_name -> google.protobuf.Timestamp
 	39, // 25: client.GetUpcomingEventsResponse.events:type_name -> client.UpcomingEvent
-	49, // 26: client.UpcomingEvent.date:type_name -> google.protobuf.Timestamp
+	50, // 26: client.UpcomingEvent.date:type_name -> google.protobuf.Timestamp
 	9,  // 27: client.UpcomingEvent.location:type_name -> client.Location
-	49, // 28: client.UpcomingEvent.start_time:type_name -> google.protobuf.Timestamp
-	49, // 29: client.UpcomingEvent.end_time:type_name -> google.protobuf.Timestamp
+	50, // 28: client.UpcomingEvent.start_time:type_name -> google.protobuf.Timestamp
+	50, // 29: client.UpcomingEvent.end_time:type_name -> google.protobuf.Timestamp
 	42, // 30: client.GetVendorProfileResponse.vendor_details:type_name -> client.VendorDetails
 	6,  // 31: client.VendorDetails.categories:type_name -> client.Category
-	49, // 32: client.VendorDetails.created_at:type_name -> google.protobuf.Timestamp
-	49, // 33: client.VendorDetails.updated_at:type_name -> google.protobuf.Timestamp
+	50, // 32: client.VendorDetails.created_at:type_name -> google.protobuf.Timestamp
+	50, // 33: client.VendorDetails.updated_at:type_name -> google.protobuf.Timestamp
 	33, // 34: client.VendorDetails.services:type_name -> client.Service
-	0,  // 35: client.ClientService.GetMasterOfCeremony:input_type -> client.MasterOfCeremonyRequest
-	2,  // 36: client.ClientService.HandleStripeEvent:input_type -> client.StripeWebhookRequest
-	4,  // 37: client.ClientService.VerifyPayment:input_type -> client.VerifyPaymentRequest
-	11, // 38: client.ClientService.ClientDashboard:input_type -> client.LandingPageRequest
-	13, // 39: client.ClientService.CreateEvent:input_type -> client.CreateEventRequest
-	16, // 40: client.ClientService.EditEvent:input_type -> client.EditEventRequest
-	18, // 41: client.ClientService.GetClientProfile:input_type -> client.GetClientProfileRequest
-	20, // 42: client.ClientService.EditClientProfile:input_type -> client.EditClientProfileRequest
-	22, // 43: client.ClientService.ResetPassword:input_type -> client.ResetPasswordRequest
-	24, // 44: client.ClientService.GetBookings:input_type -> client.GetBookingsRequest
-	28, // 45: client.ClientService.BookVendor:input_type -> client.BookVendorRequest
-	30, // 46: client.ClientService.GetVendorsByCategory:input_type -> client.GetVendorsByCategoryRequest
-	34, // 47: client.ClientService.GetHostedEvents:input_type -> client.GetHostedEventsRequest
-	37, // 48: client.ClientService.GetUpcomingEvents:input_type -> client.GetUpcomingEventsRequest
-	40, // 49: client.ClientService.GetVendorProfile:input_type -> client.GetVendorProfileRequest
-	43, // 50: client.ClientService.AddReviewRatings:input_type -> client.AddReviewRatingsRequest
-	45, // 51: client.ClientService.EditReviewRatings:input_type -> client.EditReviewRatingsRequest
-	47, // 52: client.ClientService.ViewClientReviewRatings:input_type -> client.ViewClientReviewRatingsRequest
-	1,  // 53: client.ClientService.GetMasterOfCeremony:output_type -> client.MasterOfCeremonyResponse
-	3,  // 54: client.ClientService.HandleStripeEvent:output_type -> client.StripeWebhookResponse
-	5,  // 55: client.ClientService.VerifyPayment:output_type -> client.VerifyPaymentResponse
-	12, // 56: client.ClientService.ClientDashboard:output_type -> client.LandingPageResponse
-	15, // 57: client.ClientService.CreateEvent:output_type -> client.CreateEventResponse
-	17, // 58: client.ClientService.EditEvent:output_type -> client.EditEventResponse
-	19, // 59: client.ClientService.GetClientProfile:output_type -> client.GetClientProfileResponse
-	21, // 60: client.ClientService.EditClientProfile:output_type -> client.EditClientProfileResponse
-	23, // 61: client.ClientService.ResetPassword:output_type -> client.ResetPasswordResponse
-	25, // 62: client.ClientService.GetBookings:output_type -> client.GetBookingsResponse
-	29, // 63: client.ClientService.BookVendor:output_type -> client.BookVendorResponse
-	31, // 64: client.ClientService.GetVendorsByCategory:output_type -> client.GetVendorsByCategoryResponse
-	35, // 65: client.ClientService.GetHostedEvents:output_type -> client.GetHostedEventsResponse
-	38, // 66: client.ClientService.GetUpcomingEvents:output_type -> client.GetUpcomingEventsResponse
-	41, // 67: client.ClientService.GetVendorProfile:output_type -> client.GetVendorProfileResponse
-	44, // 68: client.ClientService.AddReviewRatings:output_type -> client.AddReviewRatingsResponse
-	46, // 69: client.ClientService.EditReviewRatings:output_type -> client.EditReviewRatingsResponse
-	48, // 70: client.ClientService.ViewClientReviewRatings:output_type -> client.ViewClientReviewRatingsResponse
-	53, // [53:71] is the sub-list for method output_type
-	35, // [35:53] is the sub-list for method input_type
-	35, // [35:35] is the sub-list for extension type_name
-	35, // [35:35] is the sub-list for extension extendee
-	0,  // [0:35] is the sub-list for field type_name
+	48, // 35: client.ViewClientReviewRatingsResponse.review:type_name -> client.ReviewDetails
+	0,  // 36: client.ClientService.GetMasterOfCeremony:input_type -> client.MasterOfCeremonyRequest
+	2,  // 37: client.ClientService.HandleStripeEvent:input_type -> client.StripeWebhookRequest
+	4,  // 38: client.ClientService.VerifyPayment:input_type -> client.VerifyPaymentRequest
+	11, // 39: client.ClientService.ClientDashboard:input_type -> client.LandingPageRequest
+	13, // 40: client.ClientService.CreateEvent:input_type -> client.CreateEventRequest
+	16, // 41: client.ClientService.EditEvent:input_type -> client.EditEventRequest
+	18, // 42: client.ClientService.GetClientProfile:input_type -> client.GetClientProfileRequest
+	20, // 43: client.ClientService.EditClientProfile:input_type -> client.EditClientProfileRequest
+	22, // 44: client.ClientService.ResetPassword:input_type -> client.ResetPasswordRequest
+	24, // 45: client.ClientService.GetBookings:input_type -> client.GetBookingsRequest
+	28, // 46: client.ClientService.BookVendor:input_type -> client.BookVendorRequest
+	30, // 47: client.ClientService.GetVendorsByCategory:input_type -> client.GetVendorsByCategoryRequest
+	34, // 48: client.ClientService.GetHostedEvents:input_type -> client.GetHostedEventsRequest
+	37, // 49: client.ClientService.GetUpcomingEvents:input_type -> client.GetUpcomingEventsRequest
+	40, // 50: client.ClientService.GetVendorProfile:input_type -> client.GetVendorProfileRequest
+	43, // 51: client.ClientService.AddReviewRatings:input_type -> client.AddReviewRatingsRequest
+	45, // 52: client.ClientService.EditReviewRatings:input_type -> client.EditReviewRatingsRequest
+	47, // 53: client.ClientService.ViewClientReviewRatings:input_type -> client.ViewClientReviewRatingsRequest
+	1,  // 54: client.ClientService.GetMasterOfCeremony:output_type -> client.MasterOfCeremonyResponse
+	3,  // 55: client.ClientService.HandleStripeEvent:output_type -> client.StripeWebhookResponse
+	5,  // 56: client.ClientService.VerifyPayment:output_type -> client.VerifyPaymentResponse
+	12, // 57: client.ClientService.ClientDashboard:output_type -> client.LandingPageResponse
+	15, // 58: client.ClientService.CreateEvent:output_type -> client.CreateEventResponse
+	17, // 59: client.ClientService.EditEvent:output_type -> client.EditEventResponse
+	19, // 60: client.ClientService.GetClientProfile:output_type -> client.GetClientProfileResponse
+	21, // 61: client.ClientService.EditClientProfile:output_type -> client.EditClientProfileResponse
+	23, // 62: client.ClientService.ResetPassword:output_type -> client.ResetPasswordResponse
+	25, // 63: client.ClientService.GetBookings:output_type -> client.GetBookingsResponse
+	29, // 64: client.ClientService.BookVendor:output_type -> client.BookVendorResponse
+	31, // 65: client.ClientService.GetVendorsByCategory:output_type -> client.GetVendorsByCategoryResponse
+	35, // 66: client.ClientService.GetHostedEvents:output_type -> client.GetHostedEventsResponse
+	38, // 67: client.ClientService.GetUpcomingEvents:output_type -> client.GetUpcomingEventsResponse
+	41, // 68: client.ClientService.GetVendorProfile:output_type -> client.GetVendorProfileResponse
+	44, // 69: client.ClientService.AddReviewRatings:output_type -> client.AddReviewRatingsResponse
+	46, // 70: client.ClientService.EditReviewRatings:output_type -> client.EditReviewRatingsResponse
+	49, // 71: client.ClientService.ViewClientReviewRatings:output_type -> client.ViewClientReviewRatingsResponse
+	54, // [54:72] is the sub-list for method output_type
+	36, // [36:54] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_client_client_proto_init() }
@@ -4421,6 +4474,18 @@ func file_client_client_proto_init() {
 			}
 		}
 		file_client_client_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ReviewDetails); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_client_client_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ViewClientReviewRatingsResponse); i {
 			case 0:
 				return &v.state
@@ -4439,7 +4504,7 @@ func file_client_client_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_client_client_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   49,
+			NumMessages:   50,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
