@@ -35,6 +35,7 @@ type ClientServiceClient interface {
 	GetVendorProfile(ctx context.Context, in *GetVendorProfileRequest, opts ...grpc.CallOption) (*GetVendorProfileResponse, error)
 	AddReviewRatings(ctx context.Context, in *AddReviewRatingsRequest, opts ...grpc.CallOption) (*AddReviewRatingsResponse, error)
 	EditReviewRatings(ctx context.Context, in *EditReviewRatingsRequest, opts ...grpc.CallOption) (*EditReviewRatingsResponse, error)
+	ViewClientReviewRatings(ctx context.Context, in *ViewClientReviewRatingsRequest, opts ...grpc.CallOption) (*ViewClientReviewRatingsResponse, error)
 }
 
 type clientServiceClient struct {
@@ -198,6 +199,15 @@ func (c *clientServiceClient) EditReviewRatings(ctx context.Context, in *EditRev
 	return out, nil
 }
 
+func (c *clientServiceClient) ViewClientReviewRatings(ctx context.Context, in *ViewClientReviewRatingsRequest, opts ...grpc.CallOption) (*ViewClientReviewRatingsResponse, error) {
+	out := new(ViewClientReviewRatingsResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/ViewClientReviewRatings", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -219,6 +229,7 @@ type ClientServiceServer interface {
 	GetVendorProfile(context.Context, *GetVendorProfileRequest) (*GetVendorProfileResponse, error)
 	AddReviewRatings(context.Context, *AddReviewRatingsRequest) (*AddReviewRatingsResponse, error)
 	EditReviewRatings(context.Context, *EditReviewRatingsRequest) (*EditReviewRatingsResponse, error)
+	ViewClientReviewRatings(context.Context, *ViewClientReviewRatingsRequest) (*ViewClientReviewRatingsResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -276,6 +287,9 @@ func (UnimplementedClientServiceServer) AddReviewRatings(context.Context, *AddRe
 }
 func (UnimplementedClientServiceServer) EditReviewRatings(context.Context, *EditReviewRatingsRequest) (*EditReviewRatingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditReviewRatings not implemented")
+}
+func (UnimplementedClientServiceServer) ViewClientReviewRatings(context.Context, *ViewClientReviewRatingsRequest) (*ViewClientReviewRatingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ViewClientReviewRatings not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -596,6 +610,24 @@ func _ClientService_EditReviewRatings_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_ViewClientReviewRatings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewClientReviewRatingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).ViewClientReviewRatings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/client.ClientService/ViewClientReviewRatings",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).ViewClientReviewRatings(ctx, req.(*ViewClientReviewRatingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -670,6 +702,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EditReviewRatings",
 			Handler:    _ClientService_EditReviewRatings_Handler,
+		},
+		{
+			MethodName: "ViewClientReviewRatings",
+			Handler:    _ClientService_ViewClientReviewRatings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

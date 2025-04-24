@@ -24,6 +24,7 @@ service ClientService {
   rpc GetVendorProfile (GetVendorProfileRequest) returns (GetVendorProfileResponse);
   rpc AddReviewRatings (AddReviewRatingsRequest) returns (AddReviewRatingsResponse);
   rpc EditReviewRatings(EditReviewRatingsRequest) returns (EditReviewRatingsResponse);
+  rpc ViewClientReviewRatings(ViewClientReviewRatingsRequest) returns (ViewClientReviewRatingsResponse);
 
 
 }
@@ -318,4 +319,16 @@ message EditReviewRatingsRequest{
 
 message EditReviewRatingsResponse{
   string message = 1;
+}
+
+message ViewClientReviewRatingsRequest{
+  string client_id = 1;
+}
+
+message ViewClientReviewRatingsResponse{
+  string review_id = 1;
+  string vendor_id = 2;
+  string vendor_name = 3;
+  float rating = 4;
+  string review = 5;
 }
