@@ -33,7 +33,8 @@ service ClientService {
 message GenericBookingRequest {
   string user_id = 1;
   string service_type = 2;
-  string method = 3;       
+  string method = 3;      
+  map<string, string> metadata = 4; 
 }
 
 message GenericBookingResponse {
