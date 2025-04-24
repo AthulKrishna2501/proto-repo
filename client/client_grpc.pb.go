@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClientServiceClient interface {
-	GetMasterOfCeremony(ctx context.Context, in *MasterOfCeremonyRequest, opts ...grpc.CallOption) (*MasterOfCeremonyResponse, error)
+	CreateBookingSession(ctx context.Context, in *GenericBookingRequest, opts ...grpc.CallOption) (*GenericBookingResponse, error)
 	HandleStripeEvent(ctx context.Context, in *StripeWebhookRequest, opts ...grpc.CallOption) (*StripeWebhookResponse, error)
 	VerifyPayment(ctx context.Context, in *VerifyPaymentRequest, opts ...grpc.CallOption) (*VerifyPaymentResponse, error)
 	ClientDashboard(ctx context.Context, in *LandingPageRequest, opts ...grpc.CallOption) (*LandingPageResponse, error)
@@ -47,9 +47,9 @@ func NewClientServiceClient(cc grpc.ClientConnInterface) ClientServiceClient {
 	return &clientServiceClient{cc}
 }
 
-func (c *clientServiceClient) GetMasterOfCeremony(ctx context.Context, in *MasterOfCeremonyRequest, opts ...grpc.CallOption) (*MasterOfCeremonyResponse, error) {
-	out := new(MasterOfCeremonyResponse)
-	err := c.cc.Invoke(ctx, "/client.ClientService/GetMasterOfCeremony", in, out, opts...)
+func (c *clientServiceClient) CreateBookingSession(ctx context.Context, in *GenericBookingRequest, opts ...grpc.CallOption) (*GenericBookingResponse, error) {
+	out := new(GenericBookingResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/CreateBookingSession", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +222,7 @@ func (c *clientServiceClient) DeleteReviewRatings(ctx context.Context, in *Delet
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
 type ClientServiceServer interface {
-	GetMasterOfCeremony(context.Context, *MasterOfCeremonyRequest) (*MasterOfCeremonyResponse, error)
+	CreateBookingSession(context.Context, *GenericBookingRequest) (*GenericBookingResponse, error)
 	HandleStripeEvent(context.Context, *StripeWebhookRequest) (*StripeWebhookResponse, error)
 	VerifyPayment(context.Context, *VerifyPaymentRequest) (*VerifyPaymentResponse, error)
 	ClientDashboard(context.Context, *LandingPageRequest) (*LandingPageResponse, error)
@@ -248,8 +248,8 @@ type ClientServiceServer interface {
 type UnimplementedClientServiceServer struct {
 }
 
-func (UnimplementedClientServiceServer) GetMasterOfCeremony(context.Context, *MasterOfCeremonyRequest) (*MasterOfCeremonyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMasterOfCeremony not implemented")
+func (UnimplementedClientServiceServer) CreateBookingSession(context.Context, *GenericBookingRequest) (*GenericBookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBookingSession not implemented")
 }
 func (UnimplementedClientServiceServer) HandleStripeEvent(context.Context, *StripeWebhookRequest) (*StripeWebhookResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HandleStripeEvent not implemented")
@@ -318,20 +318,20 @@ func RegisterClientServiceServer(s grpc.ServiceRegistrar, srv ClientServiceServe
 	s.RegisterService(&ClientService_ServiceDesc, srv)
 }
 
-func _ClientService_GetMasterOfCeremony_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MasterOfCeremonyRequest)
+func _ClientService_CreateBookingSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenericBookingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ClientServiceServer).GetMasterOfCeremony(ctx, in)
+		return srv.(ClientServiceServer).CreateBookingSession(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/client.ClientService/GetMasterOfCeremony",
+		FullMethod: "/client.ClientService/CreateBookingSession",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientServiceServer).GetMasterOfCeremony(ctx, req.(*MasterOfCeremonyRequest))
+		return srv.(ClientServiceServer).CreateBookingSession(ctx, req.(*GenericBookingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -668,8 +668,8 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ClientServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetMasterOfCeremony",
-			Handler:    _ClientService_GetMasterOfCeremony_Handler,
+			MethodName: "CreateBookingSession",
+			Handler:    _ClientService_CreateBookingSession_Handler,
 		},
 		{
 			MethodName: "HandleStripeEvent",

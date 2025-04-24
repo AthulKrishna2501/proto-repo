@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 option go_package = "./client;client";
 
 service ClientService {
-  rpc GetMasterOfCeremony(MasterOfCeremonyRequest) returns (MasterOfCeremonyResponse);
+  rpc CreateBookingSession(GenericBookingRequest) returns (GenericBookingResponse);
   rpc HandleStripeEvent(StripeWebhookRequest) returns (StripeWebhookResponse);
   rpc VerifyPayment(VerifyPaymentRequest) returns (VerifyPaymentResponse);
   rpc ClientDashboard(LandingPageRequest) returns (LandingPageResponse);
@@ -30,16 +30,16 @@ service ClientService {
 
 }
 
-message MasterOfCeremonyRequest {
+message GenericBookingRequest {
   string user_id = 1;
-  string method = 2;
+  string service_type = 2;
+  string method = 3;       
 }
 
-message MasterOfCeremonyResponse {
+message GenericBookingResponse {
   string url = 1;
   string message = 2;
 }
-
 message StripeWebhookRequest {
   string event_type = 1;
   string payload = 2;
