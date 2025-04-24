@@ -298,6 +298,8 @@ message VendorDetails {
   google.protobuf.Timestamp created_at = 10;
   google.protobuf.Timestamp updated_at = 11;
   repeated Service services = 12;
+  float rating = 13;
+
 }
 
 message AddReviewRatingsRequest{
