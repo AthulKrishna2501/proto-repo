@@ -195,6 +195,10 @@ message Booking {
   google.protobuf.Timestamp date = 5;
   int32 price = 6;
   string status = 7;
+  string duration = 8;
+  int32 additional_hour_price = 9;
+  string payment_id = 10;
+
 }
 
 message Client {
