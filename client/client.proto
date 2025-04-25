@@ -205,7 +205,7 @@ message Client {
 message BookVendorRequest {
   string client_id = 1; 
   string vendor_id = 2; 
-  string service = 3;  
+  string service_id = 3;  
   google.protobuf.Timestamp date = 4;
 }
 
