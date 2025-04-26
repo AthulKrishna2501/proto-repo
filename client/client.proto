@@ -27,6 +27,7 @@ service ClientService {
   rpc ViewClientReviewRatings(ViewClientReviewRatingsRequest) returns (ViewClientReviewRatingsResponse);
   rpc DeleteReviewRatings(DeleteReviewRequest) returns (DeleteReviewResponse); 
   rpc GetWallet(GetWalletRequest) returns (GetWalletResponse);
+  rpc GetClientTransactions(ViewClientTransactionsRequest) returns (ViewClientTransactionResponse);
  
 
 }
@@ -364,4 +365,20 @@ message GetWalletResponse{
   float balance = 1;
   float total_deposits = 2;
   float total_withdrawals = 3;
+}
+
+message ViewClientTransactionsRequest{
+  string client_id = 1;
+}
+
+message ViewClientTransactionResponse{
+  repeated ClientTransaction transactions = 1;
+}
+
+message ClientTransaction{
+  string transaction_id = 1;
+  string date = 2;
+  string type = 3;
+  float amount = 4;
+  string status = 5;
 }
