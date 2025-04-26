@@ -28,6 +28,7 @@ service ClientService {
   rpc DeleteReviewRatings(DeleteReviewRequest) returns (DeleteReviewResponse); 
   rpc GetWallet(GetWalletRequest) returns (GetWalletResponse);
   rpc GetClientTransactions(ViewClientTransactionsRequest) returns (ViewClientTransactionResponse);
+  rpc CompleteServiceBooking(CompleteServiceBookingRequest) returns (CompleteServiceBookingResponse);
  
 
 }
@@ -381,4 +382,14 @@ message ClientTransaction{
   string type = 3;
   float amount = 4;
   string status = 5;
+}
+
+message CompleteServiceBookingRequest{
+  string client_id = 1;
+  string booking_id = 2;
+  string status = 3;
+}
+
+message CompleteServiceBookingResponse{
+  string message = 1;
 }
