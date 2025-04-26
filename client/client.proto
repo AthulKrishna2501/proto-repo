@@ -26,6 +26,7 @@ service ClientService {
   rpc EditReviewRatings(EditReviewRatingsRequest) returns (EditReviewRatingsResponse);
   rpc ViewClientReviewRatings(ViewClientReviewRatingsRequest) returns (ViewClientReviewRatingsResponse);
   rpc DeleteReviewRatings(DeleteReviewRequest) returns (DeleteReviewResponse); 
+  rpc GetWallet(GetWalletRequest) returns (GetWalletResponse);
  
 
 }
@@ -353,4 +354,14 @@ message DeleteReviewRequest{
 
 message DeleteReviewResponse{
   string message = 1;
+}
+
+message GetWalletRequest{
+  string client_id = 1;
+}
+
+message GetWalletResponse{
+  float balance = 1;
+  float total_deposits = 2;
+  float total_withdrawals = 3;
 }

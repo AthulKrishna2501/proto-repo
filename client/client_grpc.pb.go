@@ -37,6 +37,7 @@ type ClientServiceClient interface {
 	EditReviewRatings(ctx context.Context, in *EditReviewRatingsRequest, opts ...grpc.CallOption) (*EditReviewRatingsResponse, error)
 	ViewClientReviewRatings(ctx context.Context, in *ViewClientReviewRatingsRequest, opts ...grpc.CallOption) (*ViewClientReviewRatingsResponse, error)
 	DeleteReviewRatings(ctx context.Context, in *DeleteReviewRequest, opts ...grpc.CallOption) (*DeleteReviewResponse, error)
+	GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error)
 }
 
 type clientServiceClient struct {
@@ -218,6 +219,15 @@ func (c *clientServiceClient) DeleteReviewRatings(ctx context.Context, in *Delet
 	return out, nil
 }
 
+func (c *clientServiceClient) GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error) {
+	out := new(GetWalletResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/GetWallet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -241,6 +251,7 @@ type ClientServiceServer interface {
 	EditReviewRatings(context.Context, *EditReviewRatingsRequest) (*EditReviewRatingsResponse, error)
 	ViewClientReviewRatings(context.Context, *ViewClientReviewRatingsRequest) (*ViewClientReviewRatingsResponse, error)
 	DeleteReviewRatings(context.Context, *DeleteReviewRequest) (*DeleteReviewResponse, error)
+	GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -304,6 +315,9 @@ func (UnimplementedClientServiceServer) ViewClientReviewRatings(context.Context,
 }
 func (UnimplementedClientServiceServer) DeleteReviewRatings(context.Context, *DeleteReviewRequest) (*DeleteReviewResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteReviewRatings not implemented")
+}
+func (UnimplementedClientServiceServer) GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWallet not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -660,6 +674,24 @@ func _ClientService_DeleteReviewRatings_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_GetWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).GetWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/client.ClientService/GetWallet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).GetWallet(ctx, req.(*GetWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -742,6 +774,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteReviewRatings",
 			Handler:    _ClientService_DeleteReviewRatings_Handler,
+		},
+		{
+			MethodName: "GetWallet",
+			Handler:    _ClientService_GetWallet_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
