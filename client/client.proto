@@ -29,6 +29,8 @@ service ClientService {
   rpc GetWallet(GetWalletRequest) returns (GetWalletResponse);
   rpc GetClientTransactions(ViewClientTransactionsRequest) returns (ViewClientTransactionResponse);
   rpc CompleteServiceBooking(CompleteServiceBookingRequest) returns (CompleteServiceBookingResponse);
+  rpc CancelVendorBooking(CancelVendorBookingRequest) returns (CancelVendorBookingResponse);
+
  
 
 }
@@ -391,5 +393,15 @@ message CompleteServiceBookingRequest{
 }
 
 message CompleteServiceBookingResponse{
+  string message = 1;
+}
+
+message CancelVendorBookingRequest {
+  string client_id = 1;
+  string vendor_id = 2;
+  string service_id = 3;
+}
+
+message CancelVendorBookingResponse {
   string message = 1;
 }

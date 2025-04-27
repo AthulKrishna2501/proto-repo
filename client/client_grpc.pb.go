@@ -40,6 +40,7 @@ type ClientServiceClient interface {
 	GetWallet(ctx context.Context, in *GetWalletRequest, opts ...grpc.CallOption) (*GetWalletResponse, error)
 	GetClientTransactions(ctx context.Context, in *ViewClientTransactionsRequest, opts ...grpc.CallOption) (*ViewClientTransactionResponse, error)
 	CompleteServiceBooking(ctx context.Context, in *CompleteServiceBookingRequest, opts ...grpc.CallOption) (*CompleteServiceBookingResponse, error)
+	CancelVendorBooking(ctx context.Context, in *CancelVendorBookingRequest, opts ...grpc.CallOption) (*CancelVendorBookingResponse, error)
 }
 
 type clientServiceClient struct {
@@ -248,6 +249,15 @@ func (c *clientServiceClient) CompleteServiceBooking(ctx context.Context, in *Co
 	return out, nil
 }
 
+func (c *clientServiceClient) CancelVendorBooking(ctx context.Context, in *CancelVendorBookingRequest, opts ...grpc.CallOption) (*CancelVendorBookingResponse, error) {
+	out := new(CancelVendorBookingResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/CancelVendorBooking", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -274,6 +284,7 @@ type ClientServiceServer interface {
 	GetWallet(context.Context, *GetWalletRequest) (*GetWalletResponse, error)
 	GetClientTransactions(context.Context, *ViewClientTransactionsRequest) (*ViewClientTransactionResponse, error)
 	CompleteServiceBooking(context.Context, *CompleteServiceBookingRequest) (*CompleteServiceBookingResponse, error)
+	CancelVendorBooking(context.Context, *CancelVendorBookingRequest) (*CancelVendorBookingResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -346,6 +357,9 @@ func (UnimplementedClientServiceServer) GetClientTransactions(context.Context, *
 }
 func (UnimplementedClientServiceServer) CompleteServiceBooking(context.Context, *CompleteServiceBookingRequest) (*CompleteServiceBookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CompleteServiceBooking not implemented")
+}
+func (UnimplementedClientServiceServer) CancelVendorBooking(context.Context, *CancelVendorBookingRequest) (*CancelVendorBookingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelVendorBooking not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -756,6 +770,24 @@ func _ClientService_CompleteServiceBooking_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_CancelVendorBooking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelVendorBookingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).CancelVendorBooking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/client.ClientService/CancelVendorBooking",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).CancelVendorBooking(ctx, req.(*CancelVendorBookingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -850,6 +882,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CompleteServiceBooking",
 			Handler:    _ClientService_CompleteServiceBooking_Handler,
+		},
+		{
+			MethodName: "CancelVendorBooking",
+			Handler:    _ClientService_CancelVendorBooking_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
