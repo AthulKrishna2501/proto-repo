@@ -398,8 +398,7 @@ message CompleteServiceBookingResponse{
 
 message CancelVendorBookingRequest {
   string client_id = 1;
-  string vendor_id = 2;
-  string service_id = 3;
+  string booking_id = 2;
 }
 
 message CancelVendorBookingResponse {
