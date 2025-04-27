@@ -31,6 +31,8 @@ type VendorSeviceClient interface {
 	GetVendorServices(ctx context.Context, in *GetVendorServicesRequest, opts ...grpc.CallOption) (*GetVendorServicesResponse, error)
 	GetBookingRequests(ctx context.Context, in *GetBookingRequestsRequest, opts ...grpc.CallOption) (*GetBookingRequestsResponse, error)
 	ApproveBooking(ctx context.Context, in *ApproveBookingRequest, opts ...grpc.CallOption) (*ApproveBookingResponse, error)
+	GetVendorWallet(ctx context.Context, in *GetVendorWalletRequest, opts ...grpc.CallOption) (*GetVendorWalletResponse, error)
+	GetVendorTransactions(ctx context.Context, in *ViewVendorTransactionsRequest, opts ...grpc.CallOption) (*ViewVendorTransactionResponse, error)
 }
 
 type vendorSeviceClient struct {
@@ -158,6 +160,24 @@ func (c *vendorSeviceClient) ApproveBooking(ctx context.Context, in *ApproveBook
 	return out, nil
 }
 
+func (c *vendorSeviceClient) GetVendorWallet(ctx context.Context, in *GetVendorWalletRequest, opts ...grpc.CallOption) (*GetVendorWalletResponse, error) {
+	out := new(GetVendorWalletResponse)
+	err := c.cc.Invoke(ctx, "/vendor.VendorSevice/GetVendorWallet", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *vendorSeviceClient) GetVendorTransactions(ctx context.Context, in *ViewVendorTransactionsRequest, opts ...grpc.CallOption) (*ViewVendorTransactionResponse, error) {
+	out := new(ViewVendorTransactionResponse)
+	err := c.cc.Invoke(ctx, "/vendor.VendorSevice/GetVendorTransactions", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // VendorSeviceServer is the server API for VendorSevice service.
 // All implementations must embed UnimplementedVendorSeviceServer
 // for forward compatibility
@@ -175,6 +195,8 @@ type VendorSeviceServer interface {
 	GetVendorServices(context.Context, *GetVendorServicesRequest) (*GetVendorServicesResponse, error)
 	GetBookingRequests(context.Context, *GetBookingRequestsRequest) (*GetBookingRequestsResponse, error)
 	ApproveBooking(context.Context, *ApproveBookingRequest) (*ApproveBookingResponse, error)
+	GetVendorWallet(context.Context, *GetVendorWalletRequest) (*GetVendorWalletResponse, error)
+	GetVendorTransactions(context.Context, *ViewVendorTransactionsRequest) (*ViewVendorTransactionResponse, error)
 	mustEmbedUnimplementedVendorSeviceServer()
 }
 
@@ -220,6 +242,12 @@ func (UnimplementedVendorSeviceServer) GetBookingRequests(context.Context, *GetB
 }
 func (UnimplementedVendorSeviceServer) ApproveBooking(context.Context, *ApproveBookingRequest) (*ApproveBookingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApproveBooking not implemented")
+}
+func (UnimplementedVendorSeviceServer) GetVendorWallet(context.Context, *GetVendorWalletRequest) (*GetVendorWalletResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVendorWallet not implemented")
+}
+func (UnimplementedVendorSeviceServer) GetVendorTransactions(context.Context, *ViewVendorTransactionsRequest) (*ViewVendorTransactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVendorTransactions not implemented")
 }
 func (UnimplementedVendorSeviceServer) mustEmbedUnimplementedVendorSeviceServer() {}
 
@@ -468,6 +496,42 @@ func _VendorSevice_ApproveBooking_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _VendorSevice_GetVendorWallet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVendorWalletRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).GetVendorWallet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/vendor.VendorSevice/GetVendorWallet",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).GetVendorWallet(ctx, req.(*GetVendorWalletRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VendorSevice_GetVendorTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ViewVendorTransactionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VendorSeviceServer).GetVendorTransactions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/vendor.VendorSevice/GetVendorTransactions",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VendorSeviceServer).GetVendorTransactions(ctx, req.(*ViewVendorTransactionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // VendorSevice_ServiceDesc is the grpc.ServiceDesc for VendorSevice service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -526,6 +590,14 @@ var VendorSevice_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ApproveBooking",
 			Handler:    _VendorSevice_ApproveBooking_Handler,
+		},
+		{
+			MethodName: "GetVendorWallet",
+			Handler:    _VendorSevice_GetVendorWallet_Handler,
+		},
+		{
+			MethodName: "GetVendorTransactions",
+			Handler:    _VendorSevice_GetVendorTransactions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

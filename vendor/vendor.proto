@@ -20,6 +20,9 @@ service VendorSevice {
   rpc GetVendorServices(GetVendorServicesRequest) returns (GetVendorServicesResponse);
   rpc GetBookingRequests (GetBookingRequestsRequest) returns (GetBookingRequestsResponse);
   rpc ApproveBooking (ApproveBookingRequest) returns (ApproveBookingResponse);
+  rpc GetVendorWallet (GetVendorWalletRequest) returns (GetVendorWalletResponse);
+  rpc GetVendorTransactions(ViewVendorTransactionsRequest) returns (ViewVendorTransactionResponse);
+
 
 }
 
@@ -201,4 +204,30 @@ message ApproveBookingRequest {
 
 message ApproveBookingResponse {
   string message = 1;
+}
+
+message GetVendorWalletRequest{
+  string vendor_id = 1;
+}
+
+message GetVendorWalletResponse{
+  float balance = 1;
+  float total_deposits = 2;
+  float total_withdrawals = 3;
+}
+
+message ViewVendorTransactionsRequest{
+  string vendor_id = 1;
+}
+
+message ViewVendorTransactionResponse{
+  repeated VendorTransaction transactions = 1;
+}
+
+message VendorTransaction{
+  string transaction_id = 1;
+  string date = 2;
+  string type = 3;
+  float amount = 4;
+  string status = 5;
 }
