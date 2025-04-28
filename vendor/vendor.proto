@@ -194,6 +194,7 @@ message BookingRequest {
   google.protobuf.Timestamp date = 4;
   int32 price = 5;
   string status = 6; 
+  string booked_at = 7;
 }
 
 message ApproveBookingRequest {
