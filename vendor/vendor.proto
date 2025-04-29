@@ -152,10 +152,28 @@ message GetVendorDashboardRequest {
   string vendor_id = 1;
 }
 
+message MonthRevenue {
+  string month = 1;
+  int64 revenue = 2;
+}
+
+message ServiceStat {
+  string service_name = 1;
+  int32 bookings = 2;
+}
+
 message GetVendorDashboardResponse {
-  int64 total_clients_served = 1;
-  int64 total_bookings = 2;
+  int32 total_clients_served = 1;
+  int32 total_bookings = 2;
   int64 total_revenue = 3;
+  repeated MonthRevenue monthly_revenue_trend = 4;
+  string booking_growth_rate = 5;
+  string client_growth_rate = 6;
+  repeated ServiceStat top_services = 7;
+  double average_revenue_per_booking = 8;
+  int32 pending_payments = 9;
+  double average_rating = 10;
+  int32 total_reviews = 11;
 }
 
 message GetVendorServicesRequest {
