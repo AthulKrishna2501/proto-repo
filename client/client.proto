@@ -30,6 +30,7 @@ service ClientService {
   rpc GetClientTransactions(ViewClientTransactionsRequest) returns (ViewClientTransactionResponse);
   rpc CompleteServiceBooking(CompleteServiceBookingRequest) returns (CompleteServiceBookingResponse);
   rpc CancelVendorBooking(CancelVendorBookingRequest) returns (CancelVendorBookingResponse);
+  rpc CancelEvent(CancelEventRequest) returns (CancelEventResponse);
 
  
 
@@ -402,5 +403,14 @@ message CancelVendorBookingRequest {
 }
 
 message CancelVendorBookingResponse {
+  string message = 1;
+}
+
+message CancelEventRequest{
+  string client_id = 1;
+  string event_id = 2;
+}
+
+message CancelEventResponse{
   string message = 1;
 }
