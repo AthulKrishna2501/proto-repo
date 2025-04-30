@@ -31,6 +31,7 @@ service ClientService {
   rpc CompleteServiceBooking(CompleteServiceBookingRequest) returns (CompleteServiceBookingResponse);
   rpc CancelVendorBooking(CancelVendorBookingRequest) returns (CancelVendorBookingResponse);
   rpc CancelEvent(CancelEventRequest) returns (CancelEventResponse);
+  rpc GetBookedTickets(GetBookedTicketsRequest) returns (GetBookedTicketsResponse);
 
  
 
@@ -413,4 +414,21 @@ message CancelEventRequest{
 
 message CancelEventResponse{
   string message = 1;
+}
+
+message GetBookedTicketsRequest{
+  string client_id = 1;
+}
+
+message GetBookedTicketsResponse{
+  repeated TicketDetails ticket_details = 1;
+}
+
+message TicketDetails{
+  string ticket_id = 1;
+  string event_id = 2;
+  string event_name = 3;
+  string status = 4;
+  google.protobuf.Timestamp date = 5;
+  
 }
