@@ -74,7 +74,7 @@ message VendorProfileResponse {
   string profile_image = 6;
   string phone_number = 7;
   string request_status = 8;
-  string categories = 9;
+  string category = 9;
   string bio = 10;
 }
 
