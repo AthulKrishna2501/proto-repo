@@ -155,6 +155,10 @@ message AdminWalletTransaction{
 message FundReleaseRequest{}
 
 message FundReleaseResponse{
+ repeated FundReleaseRequests requests = 1;
+}
+
+message FundReleaseRequests{
   string request_id = 1;
   string event_id = 2;
   string event_name = 3;
