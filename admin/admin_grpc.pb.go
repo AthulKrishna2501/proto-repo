@@ -29,6 +29,7 @@ type AdminServiceClient interface {
 	AdminDashBoard(ctx context.Context, in *AdminDashBoardRequest, opts ...grpc.CallOption) (*AdminDashBoardResponse, error)
 	GetAllBookings(ctx context.Context, in *GetAllBookingsRequest, opts ...grpc.CallOption) (*GetAllBookingsResponse, error)
 	GetAdminWalletTransactions(ctx context.Context, in *GetAdminTransactionRequest, opts ...grpc.CallOption) (*GetAdminTransactionResponse, error)
+	GetFundRelease(ctx context.Context, in *FundReleaseRequest, opts ...grpc.CallOption) (*FundReleaseResponse, error)
 }
 
 type adminServiceClient struct {
@@ -138,6 +139,15 @@ func (c *adminServiceClient) GetAdminWalletTransactions(ctx context.Context, in 
 	return out, nil
 }
 
+func (c *adminServiceClient) GetFundRelease(ctx context.Context, in *FundReleaseRequest, opts ...grpc.CallOption) (*FundReleaseResponse, error) {
+	out := new(FundReleaseResponse)
+	err := c.cc.Invoke(ctx, "/admin.AdminService/GetFundRelease", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility
@@ -153,6 +163,7 @@ type AdminServiceServer interface {
 	AdminDashBoard(context.Context, *AdminDashBoardRequest) (*AdminDashBoardResponse, error)
 	GetAllBookings(context.Context, *GetAllBookingsRequest) (*GetAllBookingsResponse, error)
 	GetAdminWalletTransactions(context.Context, *GetAdminTransactionRequest) (*GetAdminTransactionResponse, error)
+	GetFundRelease(context.Context, *FundReleaseRequest) (*FundReleaseResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -192,6 +203,9 @@ func (UnimplementedAdminServiceServer) GetAllBookings(context.Context, *GetAllBo
 }
 func (UnimplementedAdminServiceServer) GetAdminWalletTransactions(context.Context, *GetAdminTransactionRequest) (*GetAdminTransactionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAdminWalletTransactions not implemented")
+}
+func (UnimplementedAdminServiceServer) GetFundRelease(context.Context, *FundReleaseRequest) (*FundReleaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFundRelease not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 
@@ -404,6 +418,24 @@ func _AdminService_GetAdminWalletTransactions_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_GetFundRelease_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FundReleaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).GetFundRelease(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.AdminService/GetFundRelease",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).GetFundRelease(ctx, req.(*FundReleaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminService_ServiceDesc is the grpc.ServiceDesc for AdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -454,6 +486,10 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAdminWalletTransactions",
 			Handler:    _AdminService_GetAdminWalletTransactions_Handler,
+		},
+		{
+			MethodName: "GetFundRelease",
+			Handler:    _AdminService_GetFundRelease_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

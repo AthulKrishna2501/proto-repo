@@ -20,6 +20,7 @@ service AdminService {
   rpc AdminDashBoard(AdminDashBoardRequest) returns (AdminDashBoardResponse);
   rpc GetAllBookings (GetAllBookingsRequest) returns (GetAllBookingsResponse);
   rpc GetAdminWalletTransactions(GetAdminTransactionRequest) returns (GetAdminTransactionResponse);
+  rpc GetFundRelease(FundReleaseRequest) returns (FundReleaseResponse);
 
 
 }
@@ -149,4 +150,15 @@ message AdminWalletTransaction{
   string type = 3;
   float amount = 4;
   string status = 5;
+}
+
+message FundReleaseRequest{}
+
+message FundReleaseResponse{
+  string request_id = 1;
+  string event_id = 2;
+  string event_name = 3;
+  float amount = 4;
+  uint32 tickets = 5;
+  string status = 6;
 }
