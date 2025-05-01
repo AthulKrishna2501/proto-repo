@@ -32,7 +32,7 @@ service ClientService {
   rpc CancelVendorBooking(CancelVendorBookingRequest) returns (CancelVendorBookingResponse);
   rpc CancelEvent(CancelEventRequest) returns (CancelEventResponse);
   rpc GetBookedTickets(GetBookedTicketsRequest) returns (GetBookedTicketsResponse);
-
+  rpc RequestFundRelease(FundReleaseRequest) returns (FundReleaseResponse);
  
 
 }
@@ -431,4 +431,18 @@ message TicketDetails{
   string status = 4;
   google.protobuf.Timestamp date = 5;
   
+}
+
+message FundReleaseRequest{
+  string client_id = 1;
+  string event_id = 2;
+}
+
+message FundReleaseResponse{
+  string request_id = 1;
+  string event_id = 2;
+  string event_name = 3;
+  float amount = 4;
+  int64 tickets = 5;
+  string status = 6;
 }

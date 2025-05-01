@@ -43,6 +43,7 @@ type ClientServiceClient interface {
 	CancelVendorBooking(ctx context.Context, in *CancelVendorBookingRequest, opts ...grpc.CallOption) (*CancelVendorBookingResponse, error)
 	CancelEvent(ctx context.Context, in *CancelEventRequest, opts ...grpc.CallOption) (*CancelEventResponse, error)
 	GetBookedTickets(ctx context.Context, in *GetBookedTicketsRequest, opts ...grpc.CallOption) (*GetBookedTicketsResponse, error)
+	RequestFundRelease(ctx context.Context, in *FundReleaseRequest, opts ...grpc.CallOption) (*FundReleaseResponse, error)
 }
 
 type clientServiceClient struct {
@@ -278,6 +279,15 @@ func (c *clientServiceClient) GetBookedTickets(ctx context.Context, in *GetBooke
 	return out, nil
 }
 
+func (c *clientServiceClient) RequestFundRelease(ctx context.Context, in *FundReleaseRequest, opts ...grpc.CallOption) (*FundReleaseResponse, error) {
+	out := new(FundReleaseResponse)
+	err := c.cc.Invoke(ctx, "/client.ClientService/RequestFundRelease", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
@@ -307,6 +317,7 @@ type ClientServiceServer interface {
 	CancelVendorBooking(context.Context, *CancelVendorBookingRequest) (*CancelVendorBookingResponse, error)
 	CancelEvent(context.Context, *CancelEventRequest) (*CancelEventResponse, error)
 	GetBookedTickets(context.Context, *GetBookedTicketsRequest) (*GetBookedTicketsResponse, error)
+	RequestFundRelease(context.Context, *FundReleaseRequest) (*FundReleaseResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -388,6 +399,9 @@ func (UnimplementedClientServiceServer) CancelEvent(context.Context, *CancelEven
 }
 func (UnimplementedClientServiceServer) GetBookedTickets(context.Context, *GetBookedTicketsRequest) (*GetBookedTicketsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBookedTickets not implemented")
+}
+func (UnimplementedClientServiceServer) RequestFundRelease(context.Context, *FundReleaseRequest) (*FundReleaseResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RequestFundRelease not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -852,6 +866,24 @@ func _ClientService_GetBookedTickets_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ClientService_RequestFundRelease_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FundReleaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).RequestFundRelease(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/client.ClientService/RequestFundRelease",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).RequestFundRelease(ctx, req.(*FundReleaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -958,6 +990,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBookedTickets",
 			Handler:    _ClientService_GetBookedTickets_Handler,
+		},
+		{
+			MethodName: "RequestFundRelease",
+			Handler:    _ClientService_RequestFundRelease_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
