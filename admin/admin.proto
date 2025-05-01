@@ -21,6 +21,7 @@ service AdminService {
   rpc GetAllBookings (GetAllBookingsRequest) returns (GetAllBookingsResponse);
   rpc GetAdminWalletTransactions(GetAdminTransactionRequest) returns (GetAdminTransactionResponse);
   rpc GetFundRelease(FundReleaseRequest) returns (FundReleaseResponse);
+  rpc ApproveFundRelease(ApproveFundReleaseRequest) returns (ApproveFundReleaseResponse);
 
 
 }
@@ -165,4 +166,13 @@ message FundReleaseRequests{
   float amount = 4;
   uint32 tickets = 5;
   string status = 6;
+}
+
+message ApproveFundReleaseRequest{
+  string request_id = 1;
+  string  status = 2;
+}
+
+message ApproveFundReleaseResponse{
+  string message = 1;
 }
